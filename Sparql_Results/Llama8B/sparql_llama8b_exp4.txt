@@ -1,0 +1,1022 @@
+Question 1: "For the patient with PatientID “P24680”, show their PatientSize and PatientWeight."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?patient_size?patient_weight
+WHERE {
+ ?study dcm:PatientID "P24680".
+ ?study dcm:PatientSize?patient_size.
+ ?study dcm:PatientWeight?patient_weight.
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?patient_size?patient_weight
+WHERE {
+ ?study dcm:PatientID "P24680".
+ ?study dcm:PatientSize?patient_size.
+ ?study dcm:PatientWeight?patient_weight.
+}
+================================================================================
+
+
+Question 2: "Which studies UID have RetrieveAETitle equal to “CT_ARCHIVE_A”?"
+
+⟶ Raw SPARQL (from RAG):
+SELECT?study WHERE {?study semantic-dicom:dcm.RetrieveAETitle "CT_ARCHIVE_A"^^xsd:string }
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?study WHERE {?study semantic-dicom:dcm.RetrieveAETitle "CT_ARCHIVE_A"^^xsd:string }
+================================================================================
+
+
+Question 3: "Find all seriesUID of images with modality CT performed by PerformingPhysiciansName “Dr. Johnson” between 08:00:00 and 12:00:00."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?seriesUID
+WHERE {
+   ?image dcm:SeriesUID?seriesUID.
+   ?image dcm:Modality "CT"@en.
+   ?image dcm:PerformingPhysiciansName "Dr. Johnson"@en.
+   ?image dcm:AcquisitionDate?date.
+    FILTER (?date >= "2022-01-01T08:00:00Z"^xsd:dateTime &&?date <= "2022-01-01T12:00:00Z"^xsd:dateTime)
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?seriesUID
+WHERE {
+   ?image dcm:SeriesUID?seriesUID.
+   ?image dcm:Modality "CT"@en.
+   ?image dcm:PerformingPhysiciansName "Dr. Johnson"@en.
+   ?image dcm:AcquisitionDate?date.
+    FILTER (?date >= "2022-01-01T08:00:00Z"^xsd:dateTime &&?date <= "2022-01-01T12:00:00Z"^xsd:dateTime)
+}
+================================================================================
+
+
+Question 4: "Retrieve all CT images UID where KVP is greater than 120."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?uid WHERE {
+   ?image dcm:ImageType "CT".
+   ?image dcm:UID?uid.
+    FILTER (?kvp > 120)
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?uid WHERE {
+   ?image dcm:ImageType "CT".
+   ?image dcm:UID?uid.
+    FILTER (?kvp > 120)
+}
+================================================================================
+
+
+Question 5: "List the SOPInstanceUIDs of CT images acquired on 2023‑06‑15."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?SOPInstanceUID
+WHERE {
+   ?series dcm:Modality "CT"@en.
+   ?image dcm:Series?series.
+   ?image dcm:AcquisitionDate "2023-06-15"^^xsd:date.
+   ?image dcm:SOPInstanceUID?SOPInstanceUID.
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?SOPInstanceUID
+WHERE {
+   ?series dcm:Modality "CT"@en.
+   ?image dcm:Series?series.
+   ?image dcm:AcquisitionDate "2023-06-15"^^xsd:date.
+   ?image dcm:SOPInstanceUID?SOPInstanceUID.
+}
+================================================================================
+
+
+Question 6: "Find the UID of oldest CT image (by AcquisitionDate) for PatientName “Michael Brown.”"
+
+⟶ Raw SPARQL (from RAG):
+SELECT?uid WHERE {
+ ?image dcm:AcquisitionDate?date.
+  FILTER (?date = (SELECT MAX(?max_date) FROM {?image2 dcm:AcquisitionDate?max_date } ) )
+ ?patient dcm:PatientName "Michael Brown".
+ ?image dcm:PatientID?pid.
+ ?image dcm:UID?uid.
+  FILTER (?pid =?patient)
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?uid WHERE {
+ ?image dcm:AcquisitionDate?date.
+  FILTER (?date = (SELECT MAX(?max_date) FROM {?image2 dcm:AcquisitionDate?max_date } ) )
+ ?patient dcm:PatientName "Michael Brown".
+ ?image dcm:PatientID?pid.
+ ?image dcm:UID?uid.
+  FILTER (?pid =?patient)
+}
+================================================================================
+
+
+Question 7: "Show PatientOrientation and PixelSpacing for all CT images in SeriesInstanceUID “S78901.”"
+
+⟶ Raw SPARQL (from RAG):
+SELECT?series?patientorientation?pixelspacing
+WHERE {
+ ?series dcm:SeriesInstanceUID "S78901".
+ ?series dcm:Modality "CT".
+ ?image dcm:SOPInstanceUID?sopuid.
+ ?image dcm:SeriesInstanceUID?series.
+ ?image dcm:Modality?modality.
+  FILTER (?modality = "CT").
+ ?image dcm:PixelSpacing?pixelspacing.
+ ?image dcm:ImageOrientationPatient?patientorientation.
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?series?patientorientation?pixelspacing
+WHERE {
+ ?series dcm:SeriesInstanceUID "S78901".
+ ?series dcm:Modality "CT".
+ ?image dcm:SOPInstanceUID?sopuid.
+ ?image dcm:SeriesInstanceUID?series.
+ ?image dcm:Modality?modality.
+  FILTER (?modality = "CT").
+ ?image dcm:PixelSpacing?pixelspacing.
+ ?image dcm:ImageOrientationPatient?patientorientation.
+}
+================================================================================
+
+
+Question 8: "For each patient, compute the average PatientWeight across all their studies."
+
+⟶ Raw SPARQL (from RAG):
+SELECT (avg(?weight) as?average_weight)
+WHERE {
+ ?study dcm:hasPatient?patient.
+ ?study dcm:PatientWeight?weight.
+  GROUP BY?patient
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT (avg(?weight) as?average_weight)
+WHERE {
+ ?study dcm:hasPatient?patient.
+ ?study dcm:PatientWeight?weight.
+  GROUP BY?patient
+}
+================================================================================
+
+
+Question 9: "List every study instance UID where PatientsAge exceeds 65 years."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?study WHERE { 
+?study dcm:PatientsAge?age.
+FILTER (?age > 65) }
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?study WHERE { 
+?study dcm:PatientsAge?age.
+FILTER (?age > 65) }
+================================================================================
+
+
+Question 10: "Show StudyDescription for studies dated between 2022‑01‑01 and 2022‑03‑31."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?study?studyDescription WHERE {
+   ?study dcm:StudyDate?date.
+    FILTER (xsd:date(?date) >= xsd:date("2022-01-01") && xsd:date(?date) <= xsd:date("2022-03-31")).
+   ?study dcm:StudyDescription?studyDescription.
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?study?studyDescription WHERE {
+   ?study dcm:StudyDate?date.
+    FILTER (xsd:date(?date) >= xsd:date("2022-01-01") && xsd:date(?date) <= xsd:date("2022-03-31")).
+   ?study dcm:StudyDescription?studyDescription.
+}
+================================================================================
+
+
+Question 11: "Retrieve the name of the patients whose PatientName starts with “P” and who have at least one CT image."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?patient WHERE {
+ ?study dcm:hasStudyDate?date.
+ ?study dcm:hasModality "CT".
+ ?study dcm:hasPatient?patient.
+  FILTER (regex(?patient, "^P", "i") && EXISTS {?study dcm:hasPatient?p.?p dcm:PatientName?name. FILTER (regex(?name, "^P", "i"))})
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?patient WHERE {
+ ?study dcm:hasStudyDate?date.
+ ?study dcm:hasModality "CT".
+ ?study dcm:hasPatient?patient.
+  FILTER (regex(?patient, "^P", "i") && EXISTS {?study dcm:hasPatient?p.?p dcm:PatientName?name. FILTER (regex(?name, "^P", "i"))})
+}
+================================================================================
+
+
+Question 12: "Find series UID where SeriesTime is between 14:00:00 and 16:00:00 on any date."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?series_uid WHERE {
+   ?series dcm:SeriesTime?time.
+    FILTER (xsd:dateTime(?time) >= xsd:dateTime("14:00:00") && xsd:dateTime(?time) <= xsd:dateTime("16:00:00"))
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?series_uid WHERE {
+   ?series dcm:SeriesTime?time.
+    FILTER (xsd:dateTime(?time) >= xsd:dateTime("14:00:00") && xsd:dateTime(?time) <= xsd:dateTime("16:00:00"))
+}
+================================================================================
+
+
+Question 13: "List patients names referred by Dr. Smith or Dr. Lee."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?patient WHERE {
+ ?study dcm:referringPhysicianName?physician.
+  FILTER (regex(?physician, "Smith") || regex(?physician, "Lee"))
+ ?series dcm:performingPhysiciansName?physician.
+ ?series dcm:patient?patient.
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?patient WHERE {
+ ?study dcm:referringPhysicianName?physician.
+  FILTER (regex(?physician, "Smith") || regex(?physician, "Lee"))
+ ?series dcm:performingPhysiciansName?physician.
+ ?series dcm:patient?patient.
+}
+================================================================================
+
+
+Question 14: "For each patient name, show the total count of their CT images."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?patient_name (COUNT(?series) AS?total_count)
+WHERE {
+ ?study dcm:PerformingPhysiciansName?patient_name.
+ ?series dcm:SeriesNumber?series_number.
+ ?series dcm:Modality "CT".
+ ?image dcm:SOPInstanceUID?sop_instance_uid.
+ ?image dcm:SeriesInstanceUID?series_instance_uid.
+ ?series dcm:SeriesInstanceUID?series_instance_uid.
+  FILTER (?series_instance_uid =?sop_instance_uid)
+}
+GROUP BY?patient_name
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?patient_name (COUNT(?series) AS?total_count)
+WHERE {
+ ?study dcm:PerformingPhysiciansName?patient_name.
+ ?series dcm:SeriesNumber?series_number.
+ ?series dcm:Modality "CT".
+ ?image dcm:SOPInstanceUID?sop_instance_uid.
+ ?image dcm:SeriesInstanceUID?series_instance_uid.
+ ?series dcm:SeriesInstanceUID?series_instance_uid.
+  FILTER (?series_instance_uid =?sop_instance_uid)
+}
+GROUP BY?patient_name
+================================================================================
+
+
+Question 15: "Retrieve studiesUID whose StudyDescription contains both the keywords “brain” and “contrast.”"
+
+⟶ Raw SPARQL (from RAG):
+SELECT?studiesUID WHERE {
+ ?study dcm:StudyDescription?description.
+  FILTER regex(?description, "brain", "i") && regex(?description, "contrast", "i")
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?studiesUID WHERE {
+ ?study dcm:StudyDescription?description.
+  FILTER regex(?description, "brain", "i") && regex(?description, "contrast", "i")
+}
+================================================================================
+
+
+Question 16: "List imagesUID where BitsStored is less than BitsAllocated."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?imagesUID WHERE {
+ ?image dcm:BitsStored?bitsStored.
+ ?image dcm:BitsAllocated?bitsAllocated.
+  FILTER (?bitsStored <?bitsAllocated)
+  BIND (str(?image) AS?imagesUID)
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?imagesUID WHERE {
+ ?image dcm:BitsStored?bitsStored.
+ ?image dcm:BitsAllocated?bitsAllocated.
+  FILTER (?bitsStored <?bitsAllocated)
+  BIND (str(?image) AS?imagesUID)
+}
+================================================================================
+
+
+Question 17: "Retrieve the maximum RescaleSlope value across all CT images."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?maxRescaleSlope
+WHERE {
+ ?study a dcm:Series.
+ ?series dcm:modality "CT"^^xsd:string.
+ ?image dcm:rescaleslope?rescaleSlope.
+  FILTER (?rescaleSlope = max(?rescaleSlope))
+}
+GROUP BY?maxRescaleSlope
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?maxRescaleSlope
+WHERE {
+ ?study a dcm:Series.
+ ?series dcm:modality "CT"^^xsd:string.
+ ?image dcm:rescaleslope?rescaleSlope.
+  FILTER (?rescaleSlope = max(?rescaleSlope))
+}
+GROUP BY?maxRescaleSlope
+================================================================================
+
+
+Question 18: "Find patient names who have at least one series of Modality “CT” and at least one series of Modality “RTDOSE.”"
+
+⟶ Raw SPARQL (from RAG):
+SELECT?patient WHERE {
+ ?study dcm:hasSeries?series.
+ ?series dcm:modality?modality.
+  FILTER (?modality = "CT" ||?modality = "RTDOSE").
+ ?study dcm:hasPatient?patient.
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?patient WHERE {
+ ?study dcm:hasSeries?series.
+ ?series dcm:modality?modality.
+  FILTER (?modality = "CT" ||?modality = "RTDOSE").
+ ?study dcm:hasPatient?patient.
+}
+================================================================================
+
+
+Question 19: "Show all series UID where Modality is neither “CT” nor “MR.”"
+
+⟶ Raw SPARQL (from RAG):
+SELECT?series_uid WHERE {
+ ?s dcm:Modality?modality.
+  FILTER (!bound(?modality) || STR(?modality)!= "CT" && STR(?modality)!= "MR")
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?series_uid WHERE {
+ ?s dcm:Modality?modality.
+  FILTER (!bound(?modality) || STR(?modality)!= "CT" && STR(?modality)!= "MR")
+}
+================================================================================
+
+
+Question 20: "List UID of CT images where RescaleIntercept is not set."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?uid WHERE {
+ ?study a dcm:Study.
+ ?series a dcm:Series ;
+          dcm:modality "CT"^^xsd:string ;
+          dcm:hasImage?image.
+ ?image dcm:uid?uid.
+  FILTER NOT EXISTS {?image dcm:rescaleIntercept?intercept }.
+} LIMIT 100
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?uid WHERE {
+ ?study a dcm:Study.
+ ?series a dcm:Series ;
+          dcm:modality "CT"^^xsd:string ;
+          dcm:hasImage?image.
+ ?image dcm:uid?uid.
+  FILTER NOT EXISTS {?image dcm:rescaleIntercept?intercept }.
+} LIMIT 100
+================================================================================
+
+
+Question 21: "For PatientName “Laura White,” show every StudyInstanceUID along with its StudyTime."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?studyInstanceUid?studyTime
+WHERE {
+ ?patient dcm:PatientName "Laura White"@en.
+ ?study dcm:StudyInstanceUID?studyInstanceUid ;
+         dcm:StudyTime?studyTime.
+  FILTER (?studyInstanceUid =?studyInstanceUid)
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?studyInstanceUid?studyTime
+WHERE {
+ ?patient dcm:PatientName "Laura White"@en.
+ ?study dcm:StudyInstanceUID?studyInstanceUid ;
+         dcm:StudyTime?studyTime.
+  FILTER (?studyInstanceUid =?studyInstanceUid)
+}
+================================================================================
+
+
+Question 22: "Retrieve CT images UID where PixelSpacing is between 0.5 and 1.5."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?uid WHERE {
+   ?image dcm:PixelSpacing?pixel_spacing.
+    FILTER (?pixel_spacing >= 0.5 &&?pixel_spacing <= 1.5)
+    BIND (str(?image) AS?uid)
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?uid WHERE {
+   ?image dcm:PixelSpacing?pixel_spacing.
+    FILTER (?pixel_spacing >= 0.5 &&?pixel_spacing <= 1.5)
+    BIND (str(?image) AS?uid)
+}
+================================================================================
+
+
+Question 23: "List the number of studies for each PatientSex."
+
+⟶ Raw SPARQL (from RAG):
+SELECT (COUNT(?study) AS?count) WHERE {?study dcm:PatientSex?patientsex. }
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT (COUNT(?study) AS?count) WHERE {?study dcm:PatientSex?patientsex. }
+================================================================================
+
+
+Question 24: "Find UID of series created in the last 30 days (relative to 2025‑04‑20)."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?s WHERE {?s dcm:SeriesDate?date. FILTER (xsd:date(?date) > xsd:date("2025-03-21")) }
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?s WHERE {?s dcm:SeriesDate?date. FILTER (xsd:date(?date) > xsd:date("2025-03-21")) }
+================================================================================
+
+
+Question 25: "List seriesUID that contain more than 50 CT images."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?seriesUID
+WHERE {
+   ?s dcm:containsImage?i.
+   ?i dcm:modality "CT"^^xsd:string.
+    FILTER (COUNT(?i) > 50)
+    BIND (strafter(str(?s),'study/') AS?seriesUID)
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?seriesUID
+WHERE {
+   ?s dcm:containsImage?i.
+   ?i dcm:modality "CT"^^xsd:string.
+    FILTER (COUNT(?i) > 50)
+    BIND (strafter(str(?s),'study/') AS?seriesUID)
+}
+================================================================================
+
+
+Question 26: "Retrieve studies UID before 2010‑01‑01 whose StudyID begins with “STU.”"
+
+⟶ Raw SPARQL (from RAG):
+SELECT?study WHERE {
+   ?study dcm:StudyInstanceUID?uid.
+    FILTER (xsd:date(?study) < xsd:date("2010-01-01")).
+    BIND(STRSTARTS(str(?study), "STU.") AS?studyid)
+    FILTER regex(?studyid, "^STU\\.")
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?study WHERE {
+   ?study dcm:StudyInstanceUID?uid.
+    FILTER (xsd:date(?study) < xsd:date("2010-01-01")).
+    BIND(STRSTARTS(str(?study), "STU.") AS?studyid)
+    FILTER regex(?studyid, "^STU\\.")
+}
+================================================================================
+
+
+Question 27: "Find patients name older than 70 years with PatientWeight under 60 kg."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?patient_name
+WHERE {
+   ?study dcm:PatientAge?age.
+    FILTER (?age > 70)
+   ?study dcm:PatientWeight?weight.
+    FILTER (?weight < "60"^^xsd:string)
+   ?study dcm:ReferringPhysicianName?physician.
+   ?study dcm:RetrieveAETitle?retrieve_aetitle.
+   ?study dcm:PatientsName?patient_name.
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?patient_name
+WHERE {
+   ?study dcm:PatientAge?age.
+    FILTER (?age > 70)
+   ?study dcm:PatientWeight?weight.
+    FILTER (?weight < "60"^^xsd:string)
+   ?study dcm:ReferringPhysicianName?physician.
+   ?study dcm:RetrieveAETitle?retrieve_aetitle.
+   ?study dcm:PatientsName?patient_name.
+}
+================================================================================
+
+
+Question 28: "For each patient name, show their earliest and latest StudyDate."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?patientName (MIN(?studyDate) AS?earliestStudyDate) (MAX(?studyDate) AS?latestStudyDate)
+WHERE {
+ ?patient dcm:PatientID?patientId.
+ ?study dcm:StudyID?studyId.
+ ?study dcm:StudyDate?studyDate.
+ ?study dcm:PatientID?patientId.
+ ?patient rdfs:label?patientName.
+  FILTER (?studyDate = MIN(?studyDate))
+}
+GROUP BY?patientName
+UNION
+SELECT?patientName (MIN(?studyDate) AS?earliestStudyDate) (MAX(?studyDate) AS?latestStudyDate)
+WHERE {
+ ?patient dcm:PatientID?patientId.
+ ?study dcm:StudyID?studyId.
+ ?study dcm:StudyDate?studyDate.
+ ?study dcm:PatientID?patientId.
+ ?patient rdfs:label?patientName.
+  FILTER (?studyDate = MAX(?studyDate))
+}
+GROUP BY?patientName
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?patientName (MIN(?studyDate) AS?earliestStudyDate) (MAX(?studyDate) AS?latestStudyDate)
+WHERE {
+ ?patient dcm:PatientID?patientId.
+ ?study dcm:StudyID?studyId.
+ ?study dcm:StudyDate?studyDate.
+ ?study dcm:PatientID?patientId.
+ ?patient rdfs:label?patientName.
+  FILTER (?studyDate = MIN(?studyDate))
+}
+GROUP BY?patientName
+UNION
+SELECT?patientName (MIN(?studyDate) AS?earliestStudyDate) (MAX(?studyDate) AS?latestStudyDate)
+WHERE {
+ ?patient dcm:PatientID?patientId.
+ ?study dcm:StudyID?studyId.
+ ?study dcm:StudyDate?studyDate.
+ ?study dcm:PatientID?patientId.
+ ?patient rdfs:label?patientName.
+  FILTER (?studyDate = MAX(?studyDate))
+}
+GROUP BY?patientName
+================================================================================
+
+
+Question 29: "List studiesUID that are missing a RetrieveAETitle."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?studyUID WHERE {
+ ?study dcm:RetrieveAETitle?retrieveAETitle.
+  FILTER NOT EXISTS {?study dcm:RetrieveAETitle?retrieveAETitle }
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?studyUID WHERE {
+ ?study dcm:RetrieveAETitle?retrieveAETitle.
+  FILTER NOT EXISTS {?study dcm:RetrieveAETitle?retrieveAETitle }
+}
+================================================================================
+
+
+Question 30: "Find all CT images UID where SamplesPerPixel > 1."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?uid WHERE {
+   ?image a dcm:Image.
+   ?image dcm:SOPInstanceUID?uid.
+   ?image dcm:SamplesPerPixel?samplesPerPixel.
+    FILTER (?samplesPerPixel > 1)
+    FILTER (?image dcm:Modality = "CT")
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?uid WHERE {
+   ?image a dcm:Image.
+   ?image dcm:SOPInstanceUID?uid.
+   ?image dcm:SamplesPerPixel?samplesPerPixel.
+    FILTER (?samplesPerPixel > 1)
+    FILTER (?image dcm:Modality = "CT")
+}
+================================================================================
+
+
+Question 31: "Show each PatientName along with the total number of series they have."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?patientName (COUNT(?series) AS?totalSeriesCount)
+WHERE {
+ ?series dcm:PatientName?patientName.
+  BIND (?patientName AS?patientName)
+}
+GROUP BY?patientName
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?patientName (COUNT(?series) AS?totalSeriesCount)
+WHERE {
+ ?series dcm:PatientName?patientName.
+  BIND (?patientName AS?patientName)
+}
+GROUP BY?patientName
+================================================================================
+
+
+Question 32: "Retrieve studiesUID where StudyTime = “00:00:00” exactly."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?studiesUID WHERE {?study dcm:StudyTime "00:00:00"^^xsd:time ; dcm:StudyInstanceUID?studiesUID. }
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?studiesUID WHERE {?study dcm:StudyTime "00:00:00"^^xsd:time ; dcm:StudyInstanceUID?studiesUID. }
+================================================================================
+
+
+Question 33: "Find CT seriesUID whose ImageType includes the value “DERIVED.”"
+
+⟶ Raw SPARQL (from RAG):
+SELECT?seriesUID
+WHERE {
+ ?s a dcm:Series.
+ ?s dcm:Modality "CT"@en.
+ ?i dcm:isImageOf?s.
+ ?i dcm:ImageType?it.
+  FILTER regex(?it, "DERIVED").
+  BIND (strafter(str(?s), "study.") as?seriesUID)
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?seriesUID
+WHERE {
+ ?s a dcm:Series.
+ ?s dcm:Modality "CT"@en.
+ ?i dcm:isImageOf?s.
+ ?i dcm:ImageType?it.
+  FILTER regex(?it, "DERIVED").
+  BIND (strafter(str(?s), "study.") as?seriesUID)
+}
+================================================================================
+
+
+Question 34: "List all patients name whose PatientBirthDate falls on February 29 (leap day)."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?name WHERE {
+   ?patient dcm:PatientBirthDate?date.
+    FILTER (xsd:date(?date) = xsd:date("1996-02-29")).
+    BIND (strafter(str(?patient), "http://example.com/patient/") AS?name)
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?name WHERE {
+   ?patient dcm:PatientBirthDate?date.
+    FILTER (xsd:date(?date) = xsd:date("1996-02-29")).
+    BIND (strafter(str(?patient), "http://example.com/patient/") AS?name)
+}
+================================================================================
+
+
+Question 35: "Find images UID where HighBit is less than 12."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?image WHERE {
+   ?image dcm:HighBit?highbit.
+    FILTER (?highbit < 12)
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?image WHERE {
+   ?image dcm:HighBit?highbit.
+    FILTER (?highbit < 12)
+}
+================================================================================
+
+
+Question 36: "List seriesUID where SeriesDate is in the summer months (June, July, or August)."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?seriesUID WHERE {
+ ?s dcm:SeriesDate?date.
+  FILTER (str(?date) >= "2022-06-01" && str(?date) <= "2022-08-31")
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?seriesUID WHERE {
+ ?s dcm:SeriesDate?date.
+  FILTER (str(?date) >= "2022-06-01" && str(?date) <= "2022-08-31")
+}
+================================================================================
+
+
+Question 37: "Retrieve patients names with PatientSize greater than 1.75 m."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?patient WHERE {
+   ?study dcm:hasPatientSize?size.
+    FILTER (str(?size) > "1.75"^^xsd:string)
+   ?study dcm:hasPatient?patient
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?patient WHERE {
+   ?study dcm:hasPatientSize?size.
+    FILTER (str(?size) > "1.75"^^xsd:string)
+   ?study dcm:hasPatient?patient
+}
+================================================================================
+
+
+Question 38: "Show seriesUID where PerformingPhysiciansName contains the substring “Watson.”"
+
+⟶ Raw SPARQL (from RAG):
+SELECT?seriesUID WHERE {
+ ?s dcm:hasSeriesUID?seriesUID.
+ ?s dcm:hasPerformingPhysiciansName?name.
+  FILTER (CONTAINS(?name, "Watson"))
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?seriesUID WHERE {
+ ?s dcm:hasSeriesUID?seriesUID.
+ ?s dcm:hasPerformingPhysiciansName?name.
+  FILTER (CONTAINS(?name, "Watson"))
+}
+================================================================================
+
+
+Question 39: "List CT imagesUID where the Z‑coordinate of ImagePositionPatient is positive."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?imageUID WHERE {
+ ?image dcm:hasImageUID?imageUID.
+ ?image dcm:hasImagePositionPatient [
+    dcm:imagePositionPatientZ?z.
+    FILTER (?z > 0)
+  ].
+  FILTER (isLiteral(?imageUID))
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?imageUID WHERE {
+ ?image dcm:hasImageUID?imageUID.
+ ?image dcm:hasImagePositionPatient [
+    dcm:imagePositionPatientZ?z.
+    FILTER (?z > 0)
+  ].
+  FILTER (isLiteral(?imageUID))
+}
+================================================================================
+
+
+Question 40: "What is the date difference between the earliest and latest study for Patient 'David Green'?"
+
+⟶ Raw SPARQL (from RAG):
+SELECT (xsd:date(?latest) - xsd:date(?earliest)) AS?date_diff
+WHERE {
+  BIND("David Green" AS?patient_name)
+ ?study dcm:PatientName?patient_name.
+ ?study dcm:StudyDate?earliest.
+  FILTER NOT EXISTS {?study2 dcm:StudyDate?later. }
+  OPTIONAL {?study dcm:StudyDate?latest. }
+  FILTER (?latest >?earliest)
+}
+ORDER BY DESC(?latest)
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT (xsd:date(?latest) - xsd:date(?earliest)) AS?date_diff
+WHERE {
+  BIND("David Green" AS?patient_name)
+ ?study dcm:PatientName?patient_name.
+ ?study dcm:StudyDate?earliest.
+  FILTER NOT EXISTS {?study2 dcm:StudyDate?later. }
+  OPTIONAL {?study dcm:StudyDate?latest. }
+  FILTER (?latest >?earliest)
+}
+ORDER BY DESC(?latest)
+================================================================================
+
+
+Question 41: "Find patientsName who have studies with a Patient Weight recorded but no Patient Size."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?patientsName WHERE { 
+ ?study dcm:hasPatientWeight?weight. 
+  FILTER NOT EXISTS {?study dcm:hasPatientSize?size }.
+  BIND (str(?study) AS?patientsName)
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?patientsName WHERE { 
+ ?study dcm:hasPatientWeight?weight. 
+  FILTER NOT EXISTS {?study dcm:hasPatientSize?size }.
+  BIND (str(?study) AS?patientsName)
+}
+================================================================================
+
+
+Question 42: "Retrieve the SOP Instance UIDs for images where the Acquisition Number is missing."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?image WHERE {
+ ?image dcm:SOPInstanceUID?uid.
+  FILTER NOT EXISTS {?image dcm:AcquisitionNumber?acqNum }.
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?image WHERE {
+ ?image dcm:SOPInstanceUID?uid.
+  FILTER NOT EXISTS {?image dcm:AcquisitionNumber?acqNum }.
+}
+================================================================================
+
+
+Question 43: "Calculate the minimum and maximum Rescale Intercept among all CT images"
+
+⟶ Raw SPARQL (from RAG):
+SELECT?minRescaleIntercept?maxRescaleIntercept
+WHERE {
+ ?series a dcm:Series.
+ ?series dcm:Modality "CT"@en.
+ ?image dcm:Series?series.
+ ?image dcm:RescaleIntercept?rescaleIntercept.
+  BIND (MIN(?rescaleIntercept) AS?minRescaleIntercept)
+  BIND (MAX(?rescaleIntercept) AS?maxRescaleIntercept)
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?minRescaleIntercept?maxRescaleIntercept
+WHERE {
+ ?series a dcm:Series.
+ ?series dcm:Modality "CT"@en.
+ ?image dcm:Series?series.
+ ?image dcm:RescaleIntercept?rescaleIntercept.
+  BIND (MIN(?rescaleIntercept) AS?minRescaleIntercept)
+  BIND (MAX(?rescaleIntercept) AS?maxRescaleIntercept)
+}
+================================================================================
+
+
+Question 44: "What is the average Patient Weight for studies performed by Dr. Rodriguez?"
+
+⟶ Raw SPARQL (from RAG):
+SELECT (avg(?weight) as?averageWeight)
+WHERE {
+ ?study dcm:PatientWeight?weight.
+ ?study dcm:PerformedBy?doctor.
+ ?doctor rdfs:label "Dr. Rodriguez".
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT (avg(?weight) as?averageWeight)
+WHERE {
+ ?study dcm:PatientWeight?weight.
+ ?study dcm:PerformedBy?doctor.
+ ?doctor rdfs:label "Dr. Rodriguez".
+}
+================================================================================
+
+
+Question 45: "What is the Bits Stored value for images with a Rescale Slope of 2.0?"
+
+⟶ Raw SPARQL (from RAG):
+SELECT?image WHERE {
+   ?image dcm:BitsStored?bits_stored.
+   ?image dcm:RescaleSlope "2.0"^^xsd:float.
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?image WHERE {
+   ?image dcm:BitsStored?bits_stored.
+   ?image dcm:RescaleSlope "2.0"^^xsd:float.
+}
+================================================================================
+
+
+Question 46: "Find the Study Descriptions for all studies performed on October 26, 2022."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?studyDescription WHERE { 
+   ?study dcm:StudyDate "2022-10-26"^^xsd:date ;
+           dcm:StudyDescription?studyDescription.
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?studyDescription WHERE { 
+   ?study dcm:StudyDate "2022-10-26"^^xsd:date ;
+           dcm:StudyDescription?studyDescription.
+}
+================================================================================
+
+
+Question 47: "What is the patient orientation for all CT images of patient Alex Thompson?"
+
+⟶ Raw SPARQL (from RAG):
+SELECT?patientOrientation WHERE { 
+ ?image dcm:hasPatientOrientation?patientOrientation.
+ ?image dcm:hasPatientName "Alex Thompson".
+ ?image dcm:isCTImage true.
+} LIMIT 10
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?patientOrientation WHERE { 
+ ?image dcm:hasPatientOrientation?patientOrientation.
+ ?image dcm:hasPatientName "Alex Thompson".
+ ?image dcm:isCTImage true.
+} LIMIT 10
+================================================================================
+
+
+Question 48: "List name of all patients who had studies referred by Dr. Chen but performed by Dr. Wang."
+
+⟶ Raw SPARQL (from RAG):
+SELECT?patient WHERE {
+ ?study dcm:hasStudyDate?date.
+ ?series dcm:hasSeriesDate?date.
+ ?series dcm:hasPerformingPhysicianName "Dr. Wang".
+ ?study dcm:hasReferringPhysicianName "Dr. Chen".
+ ?study dcm:hasPatient?patient.
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?patient WHERE {
+ ?study dcm:hasStudyDate?date.
+ ?series dcm:hasSeriesDate?date.
+ ?series dcm:hasPerformingPhysicianName "Dr. Wang".
+ ?study dcm:hasReferringPhysicianName "Dr. Chen".
+ ?study dcm:hasPatient?patient.
+}
+================================================================================
+
+
+Question 49: "What is the range of energy weighting factors used in CT images for studies performed in 2023?"
+
+⟶ Raw SPARQL (from RAG):
+SELECT?energyWeightingFactor
+WHERE {
+   ?study a dcm:Study.
+   ?series dcm:SeriesID?seriesId.
+   ?image dcm:ImageID?imageId.
+   ?series dcm:AcquisitionDate?acqDate.
+    FILTER (xsd:date(?acqDate) >= xsd:date("2023-01-01") && xsd:date(?acqDate) <= xsd:date("2023-12-31")).
+   ?image dcm:Modality "CT".
+   ?image dcm:EnergyWeightingFactor?energyWeightingFactor.
+}
+GROUP BY?energyWeightingFactor
+ORDER BY?energyWeightingFactor
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?energyWeightingFactor
+WHERE {
+   ?study a dcm:Study.
+   ?series dcm:SeriesID?seriesId.
+   ?image dcm:ImageID?imageId.
+   ?series dcm:AcquisitionDate?acqDate.
+    FILTER (xsd:date(?acqDate) >= xsd:date("2023-01-01") && xsd:date(?acqDate) <= xsd:date("2023-12-31")).
+   ?image dcm:Modality "CT".
+   ?image dcm:EnergyWeightingFactor?energyWeightingFactor.
+}
+GROUP BY?energyWeightingFactor
+ORDER BY?energyWeightingFactor
+================================================================================
+
+
+Question 50: "Which imagesUID have PhotometricInterpretation “MONOCHROME2” and SamplesPerPixel = 1?"
+
+⟶ Raw SPARQL (from RAG):
+SELECT?imagesUID
+WHERE {
+   ?image dcm:SOPInstanceUID?imagesUID.
+   ?image dcm:PhotometricInterpretation "MONOCHROME2"^^xsd:string.
+   ?image dcm:SamplesPerPixel 1.
+}
+
+⟶ Final SPARQL (after Ontology-based LLM Check):
+SELECT?imagesUID
+WHERE {
+   ?image dcm:SOPInstanceUID?imagesUID.
+   ?image dcm:PhotometricInterpretation "MONOCHROME2"^^xsd:string.
+   ?image dcm:SamplesPerPixel 1.
+}
+================================================================================
+
+

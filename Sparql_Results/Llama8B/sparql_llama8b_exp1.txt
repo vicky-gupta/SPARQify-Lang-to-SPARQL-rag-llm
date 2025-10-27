@@ -1,0 +1,2937 @@
+Question1: "For the patient with PatientID “P24680”, show their PatientSize and PatientWeight."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT?PatientSize?PatientWeight
+WHERE {
+   ?study rdf:type dcm:Study.
+   ?study dcm:PatientID "P24680".
+   ?study dcm:PatientSize?PatientSize.
+   ?study dcm:PatientWeight?PatientWeight.
+} 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#PatientWeight -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientWeight">
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>PatientWeight</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientsAge -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientsAge">
+        <rdfs:label>Patient&apos;s Age</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PerformingPhysiciansName -->
+<!-- http://semantic-dicom.org/dcm#PatientID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientID">
+        <rdfs:label>Patient ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientName -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientName">
+        <rdfs:label>Patient&apos;s Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientOrientation -->
+<!-- http://semantic-dicom.org/dcm#PatientSize -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientSize">
+        <rdfs:label>Patient&apos;s Size</r
+
+
+
+
+
+Question2: "Which studies UID have RetrieveAETitle equal to “CT_ARCHIVE_A”?"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?studyUID
+WHERE {
+   ?study rdf:type dcm:Study.
+   ?study dcm:RetrieveAETitle "CT_ARCHIVE_A".
+   ?study dcm:StudyInstanceUID?studyUID.
+} 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#RescaleIntercept -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#RescaleIntercept"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#RescaleSlope -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#RescaleSlope"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#RescaleType -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#RescaleType"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#RetrieveAETitle -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#RetrieveAETitle">
+        <rdfs:label>Retrieve AE Title</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#SOPClassUID -->
+<!-- http://semantic-dicom.org/dcm#StudyID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyID">
+        <rdfs:label>Study ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyInstanceUID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyInstanceUID">
+        <rdfs:label>Study Instance UID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyTime -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyTime">
+        <rdfs:label>Study Time</rdfs:label>
+    </owl:DatatypeProperty>
+<!-- http://semantic-dicom.org/dcm#
+
+
+
+
+
+Question3: "Find all seriesUID of images with modality CT performed by PerformingPhysiciansName “Dr. Johnson” between 08:00:00 and 12:00:00."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT?seriesUID
+WHERE {
+   ?image rdf:type dcm:Image.
+   ?image dcm:Modality "CT".
+   ?image dcm:PerformingPhysiciansName "Dr. Johnson".
+   ?image dcm:SeriesInstanceUID?seriesUID.
+    FILTER (xsd:dateTime("08:00:00") <=?image dcm:AcquisitionDateTime &&?image dcm:AcquisitionDateTime <= xsd:dateTime("12:00:00"))
+} 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:label>Image Position (Patient)</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Image"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+<!-- http://semantic-dicom.org/dcm#ImageOrientationPatient -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImageOrientationPatient">
+        <rdfs:label>Image Orientation (Patient)</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- http://semantic-dicom.org/dcm#ImageOrientationPatient+ -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImageOrientationPatient">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+
+
+
+
+
+Question4: "Retrieve all CT images UID where KVP is greater than 120."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?imageUID
+WHERE {
+   ?image rdf:type dcm:Image.
+   ?image dcm:ImageType "CT".
+   ?image dcm:KVP?kvp.
+    FILTER (?kvp > 120).
+   ?image dcm:ImageUID?imageUID.
+}  --- 
+
+Please provide the SPARQL query for the given ontology context and the question "Retrieve all CT images UID where KVP is greater than 120." 
+
+Note: The ontology context is provided in the format of RDF/OWL property and class definitions, and the question is a natural language query about the data described by the ontology. 
+
+Please follow the strict rules provided in the problem statement. 
+
+Also, please note that the ontology context is provided in a specific format, and the property and class names are case-sensitive. 
+
+Please provide the SPARQL query in the exact format as shown in the example SPARQL query. 
+
+Please do not include any explanations or extra text in your answer. 
+
+Here is the ontology context:
+
+```xml
+<owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+    <rdfs:label>Image Position (Patient)</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain>
+        <owl:Class>
+            <owl:unionOf rdf:parseType="Collection">
+                <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Image"/>
+            </owl:unionOf>
+        </owl:Class>
+    </rdfs:domain>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImageOrientationPatient">
+    <rdfs:label>Image Orientation (Patient)</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImageOrientationPatient
+
+
+
+
+
+Question5: "List the SOPInstanceUIDs of CT images acquired on 2023‑06‑15."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?SOPInstanceUID
+WHERE {
+   ?image rdf:type dcm:Image.
+   ?image dcm:ImageDate "2023-06-15"^^xsd:date.
+   ?image dcm:ImageModality "CT".
+   ?image dcm:SOPInstanceUID?SOPInstanceUID.
+}  --- 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:label>Image Position (Patient)</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Image"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+<!-- http://semantic-dicom.org/dcm#ImageOrientationPatient -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImageOrientationPatient">
+        <rdfs:label>Image Orientation (Patient)</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- http://semantic-dicom.org/dcm#ImageOrientationPatient+ -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImageOrientationPatient">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Image"/>
+                </owl:
+
+
+
+
+
+Question6: "Find the UID of oldest CT image (by AcquisitionDate) for PatientName “Michael Brown.”"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?studyUID
+WHERE {
+   ?patient rdf:type dcm:Patient.
+   ?patient dcm:PatientName "Michael Brown".
+   ?study rdf:type dcm:Study.
+   ?study dcm:isStudyOf?patient.
+   ?image rdf:type dcm:Image.
+   ?image dcm:isImageOf?study.
+   ?image dcm:AcquisitionDate?acquisitionDate.
+   ?image dcm:PhotometricInterpretation "CT".
+   ?image dcm:StudyInstanceUID?studyUID.
+    FILTER (?acquisitionDate = (SELECT MAX(?acqDate) FROM {?image2 dcm:AcquisitionDate?acqDate }))
+}  --- 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#PatientID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientID">
+        <rdfs:label>Patient ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientName -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientName">
+        <rdfs:label>Patient&apos;s Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientOrientation -->
+<!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:label>Image Position (Patient)</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf
+
+
+
+
+
+Question7: "Show PatientOrientation and PixelSpacing for all CT images in SeriesInstanceUID “S78901.”"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?patientOrientation?pixelSpacing
+WHERE {
+   ?series rdf:type dcm:Series.
+   ?series dcm:SeriesInstanceUID "S78901".
+   ?series dcm:hasImage?image.
+
+   ?image rdf:type dcm:ImageOfCTImage.
+   ?image dcm:PatientOrientation?patientOrientation.
+
+   ?image dcm:PixelSpacing?pixelSpacing.
+}  --- 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:label>Image Position (Patient)</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Image"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+<!-- http://semantic-dicom.org/dcm#ImageOrientationPatient -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImageOrientationPatient">
+        <rdfs:label>Image Orientation (Patient)</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- http://semantic-dicom.org/dcm#ImageOrientationPatient+ -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImageOrientationPatient">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about
+
+
+
+
+
+Question8: "For each patient, compute the average PatientWeight across all their studies."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT (avg(?weight) as?avgWeight)
+WHERE {
+   ?patient rdf:type dcm:Patient.
+   ?study rdf:type dcm:Study.
+   ?study dcm:isStudyOf?patient.
+   ?study dcm:PatientWeight?weight.
+    GROUP BY?patient
+}  --- 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#PatientWeight -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientWeight">
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>PatientWeight</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientsAge -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientsAge">
+        <rdfs:label>Patient&apos;s Age</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PerformingPhysiciansName -->
+<!-- http://semantic-dicom.org/dcm#PatientSize -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientSize">
+        <rdfs:label>Patient&apos;s Size</rdfs:label>
+    </owl:DatatypeProperty>
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientSize -->
+
+    <owl:DatatypeProperty rdf:resource="http://semantic-dicom.org/dcm#PatientSize">
+        <rdfs:label>PatientSize</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Study"/>
+                </owl:unionOf
+
+
+
+
+
+Question9: "List every study instance UID where PatientsAge exceeds 65 years."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT?studyUID
+WHERE {
+   ?study rdf:type dcm:Study.
+   ?study dcm:StudyInstanceUID?studyUID.
+   ?study dcm:PatientsAge?age.
+    FILTER (xsd:integer(?age) > 65)
+}  --- 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#PatientWeight -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientWeight">
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>PatientWeight</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientsAge -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientsAge">
+        <rdfs:label>Patient&apos;s Age</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PerformingPhysiciansName -->
+<!-- http://semantic-dicom.org/dcm#PatientSize -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientSize">
+        <rdfs:label>Patient&apos;s Size</rdfs:label>
+    </owl:DatatypeProperty>
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientSize -->
+
+    <owl:DatatypeProperty rdf:resource="http://semantic-dicom.org/dcm#PatientSize">
+        <rdfs:label>PatientSize</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Study"/>
+                </owl:unionOf>
+            </owl:Class>
+
+
+
+
+
+Question10: "Show StudyDescription for studies dated between 2022‑01‑01 and 2022‑03‑31."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?studyDescription
+WHERE {
+   ?study rdf:type dcm:Study.
+   ?study dcm:StudyDate?studyDate.
+    FILTER (xsd:date(?studyDate) >= xsd:date("2022-01-01") && xsd:date(?studyDate) <= xsd:date("2022-03-31")).
+   ?study dcm:StudyDescription?studyDescription.
+}  ---|> 
+
+---
+
+Ontology context:
+<owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SeriesDate"/>
+
+    <!-- http://semantic-dicom.org/dcm#StudyDate -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyDate">
+        <rdfs:label>Study Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyID -->
+<!-- http://semantic-dicom.org/dcm#StudyID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyID">
+        <rdfs:label>Study ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyInstanceUID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyInstanceUID">
+        <rdfs:label>Study Instance UID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyTime -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyTime">
+        <rdfs:label>Study Time</rdfs:label>
+    </owl:DatatypeProperty>
+<!-- http://semantic-dicom.org/dcm#AcquisitionDate -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#AcquisitionDate">
+        <rdfs:label>Acquisition Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#AcquisitionNumber
+
+
+
+
+
+Question11: "Retrieve the name of the patients whose PatientName starts with “P” and who have at least one CT image."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT?patientName
+WHERE {
+   ?patient rdf:type dcm:Patient.
+   ?patient dcm:PatientName?patientName.
+    FILTER (regex(?patientName, "P", "i") && EXISTS {?study rdf:type dcm:Study ; dcm:isStudyOf?patient ; dcm:Modality "CT" } )
+}  --- END SPARQL query ---
+
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#PatientID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientID">
+        <rdfs:label>Patient ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientName -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientName">
+        <rdfs:label>Patient&apos;s Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientOrientation -->
+<!-- http://semantic-dicom.org/dcm#PerformingPhysiciansName -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PerformingPhysiciansName">
+        <rdfs:label>Performing Physician&apos;s Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PhotometricInterpretation -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PhotometricInterpretation"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#ReferringPhysicianName -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ReferringPhysicianName">
+        <rdfs:label>Referring Physician&apos;s Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#RescaleIntercept -->
+<!-- http://semantic-dicom.org/d
+
+
+
+
+
+Question12: "Find series UID where SeriesTime is between 14:00:00 and 16:00:00 on any date."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?seriesUID
+WHERE {
+   ?series rdf:type dcm:Series.
+   ?series dcm:SeriesTime?seriesTime.
+    FILTER (xsd:dateTime(?seriesTime) >= xsd:dateTime("14:00:00") && xsd:dateTime(?seriesTime) <= xsd:dateTime("16:00:00"))
+}  -->  <---  Your query here  --->
+---
+
+Please provide the SPARQL query that answers the question based on the given ontology context.  Do not include any explanations or extra text. Just the query. 
+
+```sparql
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?seriesUID
+WHERE {
+   ?series rdf:type dcm:Series.
+   ?series dcm:SeriesDate?seriesDate.
+   ?series dcm:SeriesTime?seriesTime.
+    FILTER (xsd:dateTime(?seriesTime) >= xsd:dateTime("14:00:00") && xsd:dateTime(?seriesTime) <= xsd:dateTime("16:00:00"))
+} 
+```  -->  <---  Your query here  --->
+```  -->  <---  Your query here  --->
+```  -->  <---  Your query here  --->
+```  -->  <---  Your query here  --->
+```  -->  <---  Your query here  --->
+```  -->  <---  Your query here  --->
+```  -->  <---  Your query here  --->
+```  -->  <---  Your query here  --->
+```  -->  <---  Your query here  --->
+```  -->  <---  Your query here  --->
+```  -->  <---  Your query here  --->
+```  -->  <---  Your query here  --->
+```  -->  <---  Your query here  --->
+```  -->  <---  Your query here  --->
+```
+
+
+
+
+
+Question13: "List patients names referred by Dr. Smith or Dr. Lee."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?patientName
+WHERE {
+   ?study rdf:type dcm:Study.
+   ?study dcm:ReferringPhysicianName?referringPhysicianName.
+    FILTER (regex(?referringPhysicianName, "Dr. Smith", "i") || regex(?referringPhysicianName, "Dr. Lee", "i")).
+   ?study dcm:isStudyOf?patient.
+   ?patient rdf:type dcm:Patient.
+   ?patient dcm:PatientName?patientName.
+}  ---|> 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#PatientID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientID">
+        <rdfs:label>Patient ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientName -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientName">
+        <rdfs:label>Patient&apos;s Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientOrientation -->
+<!-- http://semantic-dicom.org/dcm#PatientWeight -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientWeight">
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>PatientWeight</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientsAge -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientsAge">
+        <rdfs:label>Patient&apos;s Age</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PerformingPhysiciansName -->
+<!-- http://semantic-dicom.org/dcm#PerformingPhysicians
+
+
+
+
+
+Question14: "For each patient name, show the total count of their CT images."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?patientName (COUNT(?ctImage) AS?totalCTCount)
+WHERE {
+   ?patient rdf:type dcm:Patient.
+   ?patient dcm:PatientName?patientName.
+
+   ?ctImage rdf:type dcm:ImageOfCTImage.
+   ?ctImage dcm:isImageOf?patient.
+
+    BIND (COUNT(?ctImage) AS?totalCTCount)
+} GROUP BY?patientName
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#PatientID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientID">
+        <rdfs:label>Patient ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientName -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientName">
+        <rdfs:label>Patient&apos;s Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientOrientation -->
+<!-- http://semantic-dicom.org/dcm#PatientOrientation -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientOrientation">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#ImageOfCTImage"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>Patient Orientation</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientWeight -->
+<!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:label>Image Position (Patient)</rdfs:label>
+
+
+
+
+
+Question15: "Retrieve studiesUID whose StudyDescription contains both the keywords “brain” and “contrast.”"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT?studyUID
+WHERE {
+   ?study rdf:type dcm:Study.
+   ?study dcm:StudyDescription?studyDescription.
+    FILTER (regex(?studyDescription, "brain", "i") && regex(?studyDescription, "contrast", "i"))
+   ?study dcm:StudyInstanceUID?studyUID.
+}  --- 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#StudyID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyID">
+        <rdfs:label>Study ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyInstanceUID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyInstanceUID">
+        <rdfs:label>Study Instance UID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyTime -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyTime">
+        <rdfs:label>Study Time</rdfs:label>
+    </owl:DatatypeProperty>
+<!-- http://semantic-dicom.org/dcm#StudyDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyDescription">
+        <rdfs:label>Study Description</rdfs:label>
+    </owl:DatatypeProperty>
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyDescription">
+        <rdfs:label>Study Description</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Study"/>
+                </
+
+
+
+
+
+Question16: "List imagesUID where BitsStored is less than BitsAllocated."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?imageUID
+WHERE {
+   ?image rdf:type dcm:Image.
+   ?image dcm:BitsStored?bitsStored.
+   ?image dcm:BitsAllocated?bitsAllocated.
+    FILTER (?bitsStored <?bitsAllocated)
+   ?image dcm:imageUID?imageUID.
+} 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#SeriesDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SeriesDescription">
+        <rdfs:label>Series Description</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <!-- http://semantic-dicom.org/dcm#SeriesDescription -->
+
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SeriesDescription">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Series"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+<!-- http://semantic-dicom.org/dcm#containsSeries -->
+
+    <owl:ObjectProperty rdf:about="http://semantic-dicom.org/dcm#containsSeries">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://semantic-dicom.org/dcm#isSeriesOf"/>
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+        <rdfs:range rdf:resource="http://semantic-dicom.org/dcm#Series"/>
+    </owl:ObjectProperty>
+   
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#isImageOf -->
+</owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#SeriesDescription"/>
+
+
+
+
+
+Question17: "Retrieve the maximum RescaleSlope value across all CT images."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?maxRescaleSlope
+WHERE {
+   ?image rdf:type dcm:Image.
+   ?image dcm:Modality?modality.
+    FILTER (?modality = "CT").
+   ?image dcm:RescaleSlope?rescaleSlope.
+    FILTER (?rescaleSlope >?maxRescaleSlope)
+    BIND(?rescaleSlope AS?maxRescaleSlope)
+}
+GROUP BY?maxRescaleSlope
+ORDER BY DESC(?maxRescaleSlope)
+LIMIT 1
+---
+
+Note: The above SPARQL query is generated based on the provided ontology context and the question. The query retrieves the maximum RescaleSlope value across all CT images. The FILTER and BIND statements are used to filter the results and bind the maximum RescaleSlope value to the variable?maxRescaleSlope. The GROUP BY and ORDER BY clauses are used to group the results by the maximum RescaleSlope value and order them in descending order, respectively. The LIMIT clause is used to limit the results to the top 1 row. 
+
+Please provide the SPARQL query for the following question:
+"Retrieve the number of images in each series that contain a CT image with a RescaleSlope value greater than 1000."
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:label>Image Position (Patient)</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Image"/>
+                </owl:unionOf>
+            </owl:
+
+
+
+
+
+Question18: "Find patient names who have at least one series of Modality “CT” and at least one series of Modality “RTDOSE.”"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT?patientName
+WHERE {
+   ?patient rdf:type dcm:Patient.
+   ?patient dcm:PatientName?patientName.
+
+   ?study rdf:type dcm:Study.
+   ?study dcm:isStudyOf?patient.
+
+   ?series rdf:type dcm:Series.
+   ?series dcm:isPartOf?study.
+
+   ?series dcm:Modality "CT".
+   ?series2 rdf:type dcm:Series.
+   ?series2 dcm:isPartOf?study.
+   ?series2 dcm:Modality "RTDOSE".
+
+    FILTER (?series!=?series2 )
+} 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#PatientID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientID">
+        <rdfs:label>Patient ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientName -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientName">
+        <rdfs:label>Patient&apos;s Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientOrientation -->
+<!-- http://semantic-dicom.org/dcm#PatientWeight -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientWeight">
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>PatientWeight</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientsAge -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientsAge">
+        <rdfs:label>Patient&apos;s Age</rdfs:label
+
+
+
+
+
+Question19: "Show all series UID where Modality is neither “CT” nor “MR.”"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT?seriesUID
+WHERE {
+   ?series rdf:type dcm:Series.
+   ?series dcm:SeriesUID?seriesUID.
+    FILTER NOT EXISTS {
+       ?series dcm:Modality "CT".
+    }
+    FILTER NOT EXISTS {
+       ?series dcm:Modality "MR".
+    }
+}  ---|> 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#Series -->
+<!-- http://semantic-dicom.org/dcm#PatientSex -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientSex">
+        <rdfs:label>Patient&apos;s Sex</rdfs:label>
+    </owl:DatatypeProperty>
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientSex -->
+
+    <owl:DatatypeProperty rdf:resource="http://semantic-dicom.org/dcm#PatientSex">
+        <rdfs:label>Patient&apos;s Sex</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Patient"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+<!-- http://semantic-dicom.org/dcm#PatientID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientID">
+        <rdfs:label>Patient ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientName -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientName">
+        <rdfs:label>Patient&apos;s Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientOrientation -->
+
+    <owl:
+
+
+
+
+
+Question20: "List UID of CT images where RescaleIntercept is not set."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?imageUID
+WHERE {
+   ?image rdf:type dcm:Image.
+   ?image dcm:PhotometricInterpretation?photometricInterpretation.
+   ?image dcm:RescaleIntercept?rescaleIntercept.
+    FILTER NOT EXISTS {
+       ?image dcm:RescaleIntercept?rescaleIntercept.
+    }
+    FILTER (?photometricInterpretation = "CT")
+    BIND (str(?image) AS?imageUID)
+}  --- 
+
+Please provide the SPARQL query for the given ontology context and the question "List UID of CT images where RescaleIntercept is not set." 
+
+Note: The ontology context is provided in the format of RDF/OWL property and class definitions, and the question is a natural language query about the data described by the ontology. 
+
+Please follow the strict rules provided in the problem statement. 
+
+Also, please note that the ontology context is quite complex and includes multiple properties and classes, but the question is relatively simple. 
+
+Please provide the complete and correct SPARQL query that answers the question, using only the given ontology terms. 
+
+Do not include any explanations or extra text in the query. 
+
+Make use of rdfs:comment that will help you to build semantically correct Query. 
+
+Do not use the property "dcm:hasInformationEntity". It is incorrect for all cases. 
+
+Always include full SPARQL syntax with correct PREFIX declarations at the top. 
+
+All property and class names must exactly match the terms in the ontology (case-sensitive). 
+
+Please provide the SPARQL query in the format specified in the example. 
+
+Please note that the ontology context includes multiple properties and classes, but the question is relatively simple. 
+
+Please provide the complete and correct SPARQL query that answers the question, using only the given ontology terms. 
+
+Do not include any explanations or extra text in the query. 
+
+Make use of rdfs:comment that will help you to build semantically correct Query. 
+
+Do not use the property "dcm:hasInformationEntity". It is incorrect for all cases. 
+
+Always include full SPARQL syntax with correct PREFIX declarations at the top. 
+
+All property and class names must exactly
+
+
+
+
+
+Question21: "For PatientName “Laura White,” show every StudyInstanceUID along with its StudyTime."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT?studyInstanceUID?studyTime
+WHERE {
+   ?patient rdf:type dcm:Patient.
+   ?patient dcm:PatientName "Laura White".
+   ?study rdf:type dcm:Study.
+   ?study dcm:isStudyOf?patient.
+   ?study dcm:StudyInstanceUID?studyInstanceUID.
+   ?study dcm:StudyTime?studyTime.
+}  --- 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#StudyID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyID">
+        <rdfs:label>Study ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyInstanceUID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyInstanceUID">
+        <rdfs:label>Study Instance UID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyTime -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyTime">
+        <rdfs:label>Study Time</rdfs:label>
+    </owl:DatatypeProperty>
+<!-- http://semantic-dicom.org/dcm#PatientID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientID">
+        <rdfs:label>Patient ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientName -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientName">
+        <rdfs:label>Patient&apos;s Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientOrientation -->
+<!-- http://semantic-dicom.org/dcm#PatientSize -->
+
+    <owl:DatatypeProperty rdf:about
+
+
+
+
+
+Question22: "Retrieve CT images UID where PixelSpacing is between 0.5 and 1.5."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?imageUID
+WHERE {
+   ?image rdf:type dcm:Image.
+   ?image dcm:PixelSpacing?pixelSpacing.
+    FILTER (?pixelSpacing >= 0.5 &&?pixelSpacing <= 1.5).
+   ?series rdf:type dcm:Series.
+   ?series dcm:containsImage?image.
+   ?series dcm:SeriesInstanceUID?seriesUID.
+   ?study rdf:type dcm:Study.
+   ?study dcm:containsSeries?series.
+   ?image dcm:ImageUID?imageUID.
+}  ---|> 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#SeriesDate -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SeriesDate">
+        <rdfs:label>Series Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <!-- http://semantic-dicom.org/dcm#SeriesDate -->
+
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SeriesDate">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Series"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+<owl:ObjectProperty rdf:about="http://semantic-dicom.org/dcm#WaterEquivalentDiameterCalculationMethodCodeSequence"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#containsImage -->
+
+    <owl:ObjectProperty rdf:about="http://semantic-dicom.org/dcm#containsImage">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://semantic-dicom.org/dcm#isImageOf"/>
+        <rdfs:domain rdf:resource="http://semantic-dicom
+
+
+
+
+
+Question23: "List the number of studies for each PatientSex."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT?PatientSex (COUNT(?study) AS?count)
+WHERE {
+   ?study rdf:type dcm:Study.
+   ?study dcm:hasPatientSex?PatientSex.
+    FILTER (lang(?PatientSex) = 'en')
+}
+GROUP BY?PatientSex
+ORDER BY?PatientSex
+LIMIT 10
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#PatientSize -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientSize">
+        <rdfs:label>Patient&apos;s Size</rdfs:label>
+    </owl:DatatypeProperty>
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientSize -->
+
+    <owl:DatatypeProperty rdf:resource="http://semantic-dicom.org/dcm#PatientSize">
+        <rdfs:label>PatientSize</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Study"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+<!-- http://semantic-dicom.org/dcm#PatientWeight -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientWeight">
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>PatientWeight</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientsAge -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientsAge">
+        <rdfs:label>Patient&apos;s Age</rdfs:label>
+    </owl
+
+
+
+
+
+Question24: "Find UID of series created in the last 30 days (relative to 2025‑04‑20)."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?seriesUID
+WHERE {
+   ?series rdf:type dcm:Series.
+   ?series dcm:SeriesDate?date.
+    FILTER (xsd:date(?date) >= xsd:date("2025-03-21") && xsd:date(?date) <= xsd:date("2025-04-19"))
+   ?series dcm:SeriesUID?seriesUID.
+}  ---|> 
+
+---
+
+Ontology context:
+<owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SamplesPerPixel"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#SeriesDate -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SeriesDate">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>SeriesDate</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyDate -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyDate">
+        <rdfs:label>Study Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyID -->
+<!-- http://semantic-dicom.org/dcm#AcquisitionDate -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#AcquisitionDate">
+        <rdfs:label>Acquisition Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#AcquisitionNumber -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#AcquisitionNumber"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#BitsAllocated -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#BitsAllocated"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#BitsStored -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#BitsStored"/>
+
+
+
+
+
+Question25: "List seriesUID that contain more than 50 CT images."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?seriesUID
+WHERE {
+   ?series rdf:type dcm:Series.
+   ?series dcm:hasImage?image.
+   ?image rdf:type dcm:ImageOfCTImage.
+   ?series dcm:SeriesInstanceUID?seriesUID.
+    FILTER (BOUND(?image) && (COUNT(?image) > 50))
+}  --- 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:label>Image Position (Patient)</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Image"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+<!-- http://semantic-dicom.org/dcm#ImageOrientationPatient -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImageOrientationPatient">
+        <rdfs:label>Image Orientation (Patient)</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- http://semantic-dicom.org/dcm#ImageOrientationPatient+ -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImageOrientationPatient">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Image"/>
+
+
+
+
+
+Question26: "Retrieve studies UID before 2010‑01‑01 whose StudyID begins with “STU.”"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?studyUID
+WHERE {
+   ?study rdf:type dcm:Study.
+   ?study dcm:StudyDate?studyDate.
+    FILTER (xsd:date(?studyDate) < xsd:date("2010-01-01") && strstarts(str(?studyID), "STU.")).
+   ?study dcm:StudyInstanceUID?studyUID.
+}  ---|> 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#StudyID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyID">
+        <rdfs:label>Study ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyInstanceUID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyInstanceUID">
+        <rdfs:label>Study Instance UID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyTime -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyTime">
+        <rdfs:label>Study Time</rdfs:label>
+    </owl:DatatypeProperty>
+<owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SamplesPerPixel"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#SeriesDate -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SeriesDate">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>SeriesDate</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyDate -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyDate">
+        <rdfs:label>Study Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#Study
+
+
+
+
+
+Question27: "Find patients name older than 70 years with PatientWeight under 60 kg."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?patientName
+WHERE {
+   ?study rdf:type dcm:Study.
+   ?study dcm:PatientsAge?age.
+    FILTER (?age > "70"^^xsd:string).
+   ?study dcm:PatientWeight?weight.
+    FILTER (?weight < "60"^^xsd:string).
+   ?study dcm:PatientName?patientName.
+} 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#PatientWeight -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientWeight">
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>PatientWeight</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientsAge -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientsAge">
+        <rdfs:label>Patient&apos;s Age</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PerformingPhysiciansName -->
+<!-- http://semantic-dicom.org/dcm#PatientID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientID">
+        <rdfs:label>Patient ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientName -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientName">
+        <rdfs:label>Patient&apos;s Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientOrientation -->
+</rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#PatientWeight"/>
+                <
+
+
+
+
+
+Question28: "For each patient name, show their earliest and latest StudyDate."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT?patientName (MIN(?studyDate) AS?earliestStudyDate) (MAX(?studyDate) AS?latestStudyDate)
+WHERE {
+   ?patient rdf:type dcm:Patient.
+   ?patient dcm:PatientName?patientName.
+
+   ?study rdf:type dcm:Study.
+   ?study dcm:isStudyOf?patient.
+
+   ?study dcm:StudyDate?studyDate.
+} GROUP BY?patientName ORDER BY?patientName
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#PatientID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientID">
+        <rdfs:label>Patient ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientName -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientName">
+        <rdfs:label>Patient&apos;s Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientOrientation -->
+<!-- http://semantic-dicom.org/dcm#PatientWeight -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientWeight">
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>PatientWeight</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientsAge -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientsAge">
+        <rdfs:label>Patient&apos;s Age</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PerformingPhysiciansName -->
+<!-- http://semantic-dicom.org/dcm#
+
+
+
+
+
+Question29: "List studiesUID that are missing a RetrieveAETitle."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT?studyUID
+WHERE {
+   ?study rdf:type dcm:Study.
+   ?study dcm:StudyInstanceUID?studyUID.
+    FILTER NOT EXISTS {?study dcm:RetrieveAETitle?retrieveAETitle }
+}  --- 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#StudyID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyID">
+        <rdfs:label>Study ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyInstanceUID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyInstanceUID">
+        <rdfs:label>Study Instance UID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyTime -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyTime">
+        <rdfs:label>Study Time</rdfs:label>
+    </owl:DatatypeProperty>
+<!-- http://semantic-dicom.org/dcm#PatientSex -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientSex">
+        <rdfs:label>Patient&apos;s Sex</rdfs:label>
+    </owl:DatatypeProperty>
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientSex -->
+
+    <owl:DatatypeProperty rdf:resource="http://semantic-dicom.org/dcm#PatientSex">
+        <rdfs:label>Patient&apos;s Sex</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Patient"/>
+                </owl:unionOf>
+            </owl:Class>
+        </r
+
+
+
+
+
+Question30: "Find all CT images UID where SamplesPerPixel > 1."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT?imageUID
+WHERE {
+   ?image rdf:type dcm:Image.
+   ?image dcm:ImageUID?imageUID.
+   ?image dcm:SamplesPerPixel?samplesPerPixel.
+    FILTER (?samplesPerPixel > 1)
+    FILTER (str(?imageUID) = "CT")
+} 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#SeriesDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SeriesDescription">
+        <rdfs:label>Series Description</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <!-- http://semantic-dicom.org/dcm#SeriesDescription -->
+
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SeriesDescription">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Series"/>
+    </owl:DatatypeProperty>
+<owl:ObjectProperty rdf:about="http://semantic-dicom.org/dcm#SeriesDescriptionSequence"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#containsImage -->
+
+    <owl:ObjectProperty rdf:about="http://semantic-dicom.org/dcm#containsImage">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://semantic-dicom.org/dcm#isImageOf"/>
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Series"/>
+        <rdfs:range rdf:resource="http://semantic-dicom.org/dcm#Image"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#containsSeries -->
+<!-- http://semantic-dicom.org/dcm#ImageOrientationPatient -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImageOrientationPatient">
+        <rdfs:label>
+
+
+
+
+
+Question31: "Show each PatientName along with the total number of series they have."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT?patientName (COUNT(?series) AS?totalSeries)
+WHERE {
+   ?patient rdf:type dcm:Patient.
+   ?patient dcm:PatientName?patientName.
+   ?study rdf:type dcm:Study.
+   ?study dcm:isStudyOf?patient.
+   ?series rdf:type dcm:Series.
+   ?series dcm:isSeriesOf?study.
+    BIND (xsd:string(?series) AS?seriesString)
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*"))
+    FILTER (regex(?seriesString, ".*
+
+
+
+
+
+Question32: "Retrieve studiesUID where StudyTime = “00:00:00” exactly."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?studyUID
+WHERE {
+   ?study rdf:type dcm:Study.
+   ?study dcm:StudyTime "00:00:00"^^xsd:time.
+   ?study dcm:StudyInstanceUID?studyUID.
+}  ---|> 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#StudyID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyID">
+        <rdfs:label>Study ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyInstanceUID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyInstanceUID">
+        <rdfs:label>Study Instance UID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyTime -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyTime">
+        <rdfs:label>Study Time</rdfs:label>
+    </owl:DatatypeProperty>
+<owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SamplesPerPixel"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#SeriesDate -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SeriesDate">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>SeriesDate</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyDate -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyDate">
+        <rdfs:label>Study Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyID -->
+<owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyTime">
+        <r
+
+
+
+
+
+Question33: "Find CT seriesUID whose ImageType includes the value “DERIVED.”"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?seriesUID
+WHERE {
+   ?series rdf:type dcm:Series.
+   ?series dcm:SeriesInstanceUID?seriesUID.
+
+   ?image rdf:type dcm:Image.
+   ?series dcm:containsImage?image.
+
+   ?image dcm:ImageType?imageType.
+    FILTER regex(?imageType, "DERIVED.").
+} 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#SeriesDate -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SeriesDate">
+        <rdfs:label>Series Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <!-- http://semantic-dicom.org/dcm#SeriesDate -->
+
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SeriesDate">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Series"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+<owl:ObjectProperty rdf:about="http://semantic-dicom.org/dcm#WaterEquivalentDiameterCalculationMethodCodeSequence"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#containsImage -->
+
+    <owl:ObjectProperty rdf:about="http://semantic-dicom.org/dcm#containsImage">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://semantic-dicom.org/dcm#isImageOf"/>
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Series"/>
+        <rdfs:range rdf:resource="http://semantic-dicom.org/dcm#Image"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#contains
+
+
+
+
+
+Question34: "List all patients name whose PatientBirthDate falls on February 29 (leap day)."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?patientName
+WHERE {
+   ?patient rdf:type dcm:Patient.
+   ?patient dcm:PatientName?patientName.
+   ?patient dcm:PatientBirthDate?birthDate.
+    FILTER (xsd:date(?birthDate) = xsd:date("1996-02-29"))
+}  --- 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#PatientID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientID">
+        <rdfs:label>Patient ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientName -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientName">
+        <rdfs:label>Patient&apos;s Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientOrientation -->
+<!-- http://semantic-dicom.org/dcm#KVP -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#KVP"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#Modality -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#Modality">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>Modality</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientBirthDate -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientBirthDate">
+        <rdfs:label>Patient&apos;s Birth Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientID -->
+<!-- http://semantic-dicom.org/dcm#PatientWeight -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientWeight">
+        <rdfs:domain
+
+
+
+
+
+Question35: "Find images UID where HighBit is less than 12."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?imageUID
+WHERE {
+   ?image rdf:type dcm:Image.
+   ?image dcm:ImageUID?imageUID.
+   ?image dcm:HighBit?highBit.
+    FILTER (xsd:integer(?highBit) < 12)
+}  --- 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#containsSeries -->
+
+    <owl:ObjectProperty rdf:about="http://semantic-dicom.org/dcm#containsSeries">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://semantic-dicom.org/dcm#isSeriesOf"/>
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+        <rdfs:range rdf:resource="http://semantic-dicom.org/dcm#Series"/>
+    </owl:ObjectProperty>
+   
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#isImageOf -->
+<!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:label>Image Position (Patient)</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Image"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+<owl:ObjectProperty rdf:about="http://semantic-dicom.org/dcm#WaterEquivalentDiameterCalculationMethodCodeSequence"/>
+    
+
+
+    <!-- http://semantic-dicom.org/d
+
+
+
+
+
+Question36: "List seriesUID where SeriesDate is in the summer months (June, July, or August)."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?seriesUID
+WHERE {
+   ?series rdf:type dcm:Series.
+   ?series dcm:SeriesDate?seriesDate.
+    FILTER (str(?seriesDate) >= "2022-06-01" && str(?seriesDate) <= "2022-08-31")
+   ?series dcm:SeriesUID?seriesUID.
+}  ---|> 
+
+---
+
+Ontology context:
+<owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SeriesDate">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label>SeriesDate</rdfs:label>
+</owl:DatatypeProperty>
+<owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyDate">
+    <rdfs:label>Study Date</rdfs:label>
+</owl:DatatypeProperty>
+<owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#KVP"/>
+<owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#Modality">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label>Modality</rdfs:label>
+</owl:DatatypeProperty>
+<owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientBirthDate">
+    <rdfs:label>Patient&apos;s Birth Date</rdfs:label>
+</owl:DatatypeProperty>
+<owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientID"/>
+<owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SeriesUID">
+    <rdfs:label>SeriesUID</rdfs:label>
+</owl:DatatypeProperty>
+<owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyID">
+    <rdfs:label>StudyID</rdfs:label>
+</owl:DatatypeProperty>
+<owl:DatatypeProperty rdf:about="
+
+
+
+
+
+Question37: "Retrieve patients names with PatientSize greater than 1.75 m."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT?patientName
+WHERE {
+   ?study rdf:type dcm:Study.
+   ?study dcm:PatientSize?patientSize.
+    FILTER (xsd:decimal(?patientSize) > 1.75)
+   ?patient rdf:type dcm:Patient.
+   ?patient dcm:PatientName?patientName.
+}  --- 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#PatientID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientID">
+        <rdfs:label>Patient ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientName -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientName">
+        <rdfs:label>Patient&apos;s Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientOrientation -->
+<!-- http://semantic-dicom.org/dcm#PatientWeight -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientWeight">
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>PatientWeight</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientsAge -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientsAge">
+        <rdfs:label>Patient&apos;s Age</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PerformingPhysiciansName -->
+<!-- http://semantic-dicom.org/dcm#PatientSize -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientSize">
+        <
+
+
+
+
+
+Question38: "Show seriesUID where PerformingPhysiciansName contains the substring “Watson.”"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?seriesUID
+WHERE {
+   ?series rdf:type dcm:Series.
+   ?series dcm:SeriesUID?seriesUID.
+   ?study rdf:type dcm:Study.
+   ?study dcm:isStudyOf?series.
+   ?study dcm:PerformingPhysiciansName?performingPhysiciansName.
+    FILTER (regex(?performingPhysiciansName, "Watson"))
+}  ---|> 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#RescaleIntercept -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#RescaleIntercept"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#RescaleSlope -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#RescaleSlope"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#RescaleType -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#RescaleType"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#RetrieveAETitle -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#RetrieveAETitle">
+        <rdfs:label>Retrieve AE Title</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#SOPClassUID -->
+<!-- http://semantic-dicom.org/dcm#Series -->
+<!-- http://semantic-dicom.org/dcm#WaterEquivalentDiameterCalcinationMethodCodeSequenceType -->
+
+    <owl:Class rdf:about="http://semantic-dicom.org/dcm#WaterEquivalentDiameterCalcinationMethodCodeSequenceType"/>
+    <rdf:Description>
+        <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+    </rdf:Description>
+    <rdf:Description>
+        <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+    </rdf:Description>
+
+
+
+
+
+Question39: "List CT imagesUID where the Z‑coordinate of ImagePositionPatient is positive."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?ctImageUID
+WHERE {
+   ?ctImage rdf:type dcm:Image.
+   ?ctImage dcm:ImageUID?ctImageUID.
+   ?ctImage dcm:ImagePositionPatient?position.
+    FILTER (strstarts(str(?position), "0,0,") && str(?position)!= "0,0,0").
+} 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:label>Image Position (Patient)</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Image"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+<!-- http://semantic-dicom.org/dcm#ImageOrientationPatient -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImageOrientationPatient">
+        <rdfs:label>Image Orientation (Patient)</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- http://semantic-dicom.org/dcm#ImageOrientationPatient+ -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImageOrientationPatient">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#
+
+
+
+
+
+Question40: "What is the date difference between the earliest and latest study for Patient 'David Green'?"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT (xsd:dateTime(?latestStudyDate) - xsd:dateTime(?earliestStudyDate)) AS?dateDiff
+WHERE {
+   ?patient rdf:type dcm:Patient.
+   ?patient dcm:PatientName "David Green".
+   ?study rdf:type dcm:Study.
+   ?study dcm:isStudyOf?patient.
+   ?study dcm:StudyDate?studyDate.
+    FILTER (xsd:dateTime(?studyDate) >= (SELECT MAX(xsd:dateTime(?s2)) AS max FROM {?patient dcm:isStudyOf?s2.?s2 dcm:StudyDate?studyDate2 } ))
+    FILTER (xsd:dateTime(?studyDate) <= (SELECT MIN(xsd:dateTime(?s3)) AS min FROM {?patient dcm:isStudyOf?s3.?s3 dcm:StudyDate?studyDate3 } ))
+    BIND (xsd:dateTime(?studyDate) AS?latestStudyDate)
+    BIND (xsd:dateTime(?studyDate) AS?earliestStudyDate)
+}  --- 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#PatientWeight -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientWeight">
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>PatientWeight</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientsAge -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientsAge">
+        <rdfs:label>Patient&apos;s Age</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PerformingPhysiciansName -->
+<owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SamplesPerPixel"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#SeriesDate -->
+
+
+
+
+
+Question41: "Find patientsName who have studies with a Patient Weight recorded but no Patient Size."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT?patientsName
+WHERE {
+   ?study rdf:type dcm:Study.
+   ?study dcm:PatientWeight?patientWeight.
+   ?study dcm:PatientSize?patientSize.
+    FILTER NOT EXISTS {?study dcm:PatientSize?patientSize }
+   ?patient rdf:type dcm:Patient.
+   ?patient dcm:PatientName?patientsName.
+    FILTER NOT EXISTS {?study dcm:isStudyOf?patient2. FILTER (?patient2!=?patient) }
+}  --- 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#PatientWeight -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientWeight">
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>PatientWeight</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientsAge -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientsAge">
+        <rdfs:label>Patient&apos;s Age</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PerformingPhysiciansName -->
+<!-- http://semantic-dicom.org/dcm#PatientID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientID">
+        <rdfs:label>Patient ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientName -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientName">
+        <rdfs:label>Patient&apos;s Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientOrientation -->
+
+
+
+
+
+Question42: "Retrieve the SOP Instance UIDs for images where the Acquisition Number is missing."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?imageUID
+WHERE {
+   ?image rdf:type dcm:Image.
+   ?image dcm:containsImage?series.
+   ?series dcm:containsSeries?study.
+   ?image dcm:AcquisitionNumber?acquisitionNumber.
+    FILTER (!bound(?acquisitionNumber))
+   ?image dcm:SOPInstanceUID?imageUID.
+}  ---|> 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:label>Image Position (Patient)</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Image"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+<owl:ObjectProperty rdf:about="http://semantic-dicom.org/dcm#WaterEquivalentDiameterCalculationMethodCodeSequence"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#containsImage -->
+
+    <owl:ObjectProperty rdf:about="http://semantic-dicom.org/dcm#containsImage">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://semantic-dicom.org/dcm#isImageOf"/>
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Series"/>
+        <rdfs:range rdf:resource="http://semantic-dicom.org/dcm#Image"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!--
+
+
+
+
+
+Question43: "Calculate the minimum and maximum Rescale Intercept among all CT images"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT (MIN(?rescaleIntercept) AS?minRescaleIntercept) (MAX(?rescaleIntercept) AS?maxRescaleIntercept)
+WHERE {
+   ?image rdf:type dcm:Image.
+   ?image dcm:Modality?modality.
+    FILTER (?modality = "CT")
+   ?image dcm:RescaleIntercept?rescaleIntercept.
+} 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#SeriesDate -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SeriesDate">
+        <rdfs:label>Series Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <!-- http://semantic-dicom.org/dcm#SeriesDate -->
+
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SeriesDate">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Series"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+<!-- http://semantic-dicom.org/dcm#containsSeries -->
+
+    <owl:ObjectProperty rdf:about="http://semantic-dicom.org/dcm#containsSeries">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://semantic-dicom.org/dcm#isSeriesOf"/>
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+        <rdfs:range rdf:resource="http://semantic-dicom.org/dcm#Series"/>
+    </owl:ObjectProperty>
+   
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#isImageOf -->
+<!--
+
+
+
+
+
+Question44: "What is the average Patient Weight for studies performed by Dr. Rodriguez?"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT (avg(?patientWeight) as?avgPatientWeight)
+WHERE {
+   ?study rdf:type dcm:Study.
+   ?study dcm:isPerformedBy?physician.
+   ?physician rdfs:comment "Dr. Rodriguez".
+   ?study dcm:PatientWeight?patientWeight.
+} 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#PatientWeight -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientWeight">
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>PatientWeight</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientsAge -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientsAge">
+        <rdfs:label>Patient&apos;s Age</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PerformingPhysiciansName -->
+<!-- http://semantic-dicom.org/dcm#PatientSize -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientSize">
+        <rdfs:label>Patient&apos;s Size</rdfs:label>
+    </owl:DatatypeProperty>
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientSize -->
+
+    <owl:DatatypeProperty rdf:resource="http://semantic-dicom.org/dcm#PatientSize">
+        <rdfs:label>PatientSize</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Study"/>
+                </owl:unionOf
+
+
+
+
+
+Question45: "What is the Bits Stored value for images with a Rescale Slope of 2.0?"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?image?bitsStored
+WHERE {
+   ?image rdf:type dcm:Image.
+   ?image dcm:RescaleSlope "2.0"^^xsd:float.
+   ?image dcm:BitsStored?bitsStored.
+} 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#containsSeries -->
+
+    <owl:ObjectProperty rdf:about="http://semantic-dicom.org/dcm#containsSeries">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://semantic-dicom.org/dcm#isSeriesOf"/>
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+        <rdfs:range rdf:resource="http://semantic-dicom.org/dcm#Series"/>
+    </owl:ObjectProperty>
+   
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#isImageOf -->
+<owl:ObjectProperty rdf:about="http://semantic-dicom.org/dcm#isImageOf"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#containsImage -->
+
+    <owl:ObjectProperty rdf:about="http://semantic-dicom.org/dcm#containsImage">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://semantic-dicom.org/dcm#isImageOf"/>
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Series"/>
+        <rdfs:range rdf:resource="http://semantic-dicom.org/dcm#Image"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#containsSeries -->
+<!-- http://semantic-dicom.org/dcm#AcquisitionDate -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#AcquisitionDate">
+        <rdfs:label>Acquisition Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org
+
+
+
+
+
+Question46: "Find the Study Descriptions for all studies performed on October 26, 2022."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?studyDescription
+WHERE {
+   ?study rdf:type dcm:Study.
+   ?study dcm:StudyDate?studyDate.
+    FILTER (str(?studyDate) = "2022-10-26").
+   ?study dcm:StudyDescription?studyDescription.
+}  --- 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#StudyID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyID">
+        <rdfs:label>Study ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyInstanceUID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyInstanceUID">
+        <rdfs:label>Study Instance UID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyTime -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyTime">
+        <rdfs:label>Study Time</rdfs:label>
+    </owl:DatatypeProperty>
+<owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SamplesPerPixel"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#SeriesDate -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SeriesDate">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>SeriesDate</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyDate -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyDate">
+        <rdfs:label>Study Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyID -->
+<!-- http://semantic-dicom.org/dcm#PatientWeight -->
+
+    <owl:Dat
+
+
+
+
+
+Question47: "What is the patient orientation for all CT images of patient Alex Thompson?"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?patientOrientation
+WHERE {
+   ?image rdf:type dcm:ImageOfCTImage.
+   ?image dcm:hasPatientName "Alex Thompson".
+   ?image dcm:PatientOrientation?patientOrientation.
+} 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#ImageOrientationPatient -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImageOrientationPatient">
+        <rdfs:label>Image Orientation (Patient)</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- http://semantic-dicom.org/dcm#ImageOrientationPatient+ -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImageOrientationPatient">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Image"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+<!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:label>Image Position (Patient)</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Image"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty
+
+
+
+
+
+Question48: "List name of all patients who had studies referred by Dr. Chen but performed by Dr. Wang."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT?patientName
+WHERE {
+   ?study rdf:type dcm:Study.
+   ?study dcm:isStudyOf?patient.
+   ?study dcm:ReferringPhysicianName "Dr. Chen".
+   ?study dcm:PerformingPhysicianName "Dr. Wang".
+   ?patient dcm:PatientName?patientName.
+}  --- 
+
+Please provide the SPARQL query for the given ontology context and natural language question. 
+
+Note: The ontology context is provided in the format of RDF/OWL property and class definitions, and the natural language question is a question about the data described by the ontology. 
+
+Please follow the strict rules provided in the problem statement. 
+
+Also, please note that the ontology context is quite complex and has many properties and classes, but the question is quite specific and only involves a few of them. 
+
+Please make sure to use the correct property and class names from the ontology context in the SPARQL query. 
+
+Also, please make sure to use the correct syntax and formatting for the SPARQL query. 
+
+Please do not include any explanations or extra text in the SPARQL query. 
+
+Please make sure to use the correct prefixes and namespace declarations at the top of the SPARQL query. 
+
+Please make sure to use the correct syntax for the SELECT clause, WHERE clause, and other clauses in the SPARQL query. 
+
+Please make sure to use the correct syntax for the property and class names in the SPARQL query. 
+
+Please make sure to use the correct syntax for the literals and variables in the SPARQL query. 
+
+Please make sure to use the correct syntax for the prefixes and namespace declarations at the top of the SPARQL query. 
+
+Please make sure to use the correct syntax for the SELECT clause, WHERE clause, and other clauses in the SPARQL query. 
+
+Please make sure to use the correct syntax for the property and class names in the SPARQL query. 
+
+Please make sure to use the correct syntax for the literals and variables in the SPARQL query. 
+
+Please make sure to use the correct syntax for the
+
+
+
+
+
+Question49: "What is the range of energy weighting factors used in CT images for studies performed in 2023?"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT?energyWeightingFactor
+WHERE {
+   ?study rdf:type dcm:Study.
+   ?study dcm:StudyDate?studyDate.
+    FILTER (xsd:date(?studyDate) >= xsd:date("2023-01-01") && xsd:date(?studyDate) <= xsd:date("2023-12-31")).
+
+   ?study dcm:hasImage?image.
+   ?image rdf:type dcm:Image.
+   ?image dcm:ImageOrientationPatient?imageOrientationPatient.
+   ?image dcm:EnergyWeightingFactor?energyWeightingFactor.
+}  --- 
+
+---
+
+Ontology context:
+<!-- http://semantic-dicom.org/dcm#PatientWeight -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientWeight">
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>PatientWeight</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientsAge -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientsAge">
+        <rdfs:label>Patient&apos;s Age</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PerformingPhysiciansName -->
+<!-- http://semantic-dicom.org/dcm#PatientOrientation -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientOrientation">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#ImageOfCTImage"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>P
+
+
+
+
+
+Question50: "Which imagesUID have PhotometricInterpretation “MONOCHROME2” and SamplesPerPixel = 1?"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT?imagesUID
+WHERE {
+   ?image rdf:type dcm:Image.
+   ?image dcm:PhotometricInterpretation "MONOCHROME2"^^xsd:string.
+   ?image dcm:SamplesPerPixel "1"^^xsd:integer.
+   ?image dcm:ImageUID?imagesUID.
+} 
+
+---
+
+Ontology context:
+</owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#PatientName"/>
+                        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#StudyDate"/>
+                        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#StudyTime"/>
+<!-- http://semantic-dicom.org/dcm#PatientName -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientName">
+        <rdfs:label>Patient Name</rdfs:label>
+    </owl:DatatypeProperty>
+<!-- http://semantic-dicom.org/dcm#StudyDate -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyDate">
+        <rdfs:label>Study Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyTime -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyTime">
+        <rdfs:label>Study Time</rdfs:label>
+    </owl:DatatypeProperty>
+<!-- http://semantic-dicom.org/dcm#StudyInstanceUID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom
+
+
+
+
+

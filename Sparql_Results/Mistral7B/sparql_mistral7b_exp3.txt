@@ -1,0 +1,880 @@
+Question1: "For the patient with PatientID “P24680”, show their PatientSize and PatientWeight."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT ?patientSize ?patientWeight
+WHERE {
+  ?study rdf:type dcm:Study .
+  ?study dcm:PatientID "P24680" .
+  ?study dcm:PatientSize ?patientSize .
+  ?study dcm:PatientWeight ?patientWeight .
+}
+
+
+
+
+
+Question2: "Which studies UID have RetrieveAETitle equal to “CT_ARCHIVE_A”?"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?studyUID WHERE {
+  ?study rdf:type dcm:Study .
+  ?study dcm:StudyUID ?studyUID .
+  ?study dcm:RetrieveAETitle ?retrieveAETitle .
+  FILTER(?retrieveAETitle = "CT_ARCHIVE_A")
+}
+
+
+
+
+
+Question3: "Find all seriesUID of images with modality CT performed by PerformingPhysiciansName “Dr. Johnson” between 08:00:00 and 12:00:00."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT DISTINCT ?seriesUID
+WHERE {
+  ?series rdf:type dcm:Series .
+  ?series dcm:Modality ?modality .
+  ?series dcm:PerformingPhysiciansName ?performer .
+  ?image dcm:isImageOf ?series .
+  ?image dcm:AcquisitionDate ?acquisitionDate .
+  ?image dcm:AcquisitionNumber ?acquisitionNumber .
+  FILTER(?modality = "CT")
+  FILTER(xsd:time(?acquisitionDate) >= xsd:time("08:00:00") && xsd:time(?acquisitionDate) <= xsd:time("12:00:00"))
+  FILTER(?performer = "Dr. Johnson")
+  BIND(CONCAT(?seriesUID, "-", ?acquisitionDate, "-", ?acquisitionNumber) AS ?seriesUID)
+}
+
+
+
+
+
+Question4: "Retrieve all CT images UID where KVP is greater than 120."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT ?imageUID WHERE {
+  ?image rdf:type dcm:Image .
+  ?image dcm:Modality "CT" .
+  ?image dcm:ImageType ?imageType .
+  ?image dcm:KVP ?kvp .
+  ?image dcm:HighBit ?highBit .
+  ?image dcm:PerformingPhysiciansName ?performingPhysician .
+  FILTER(?kvp > 120)
+}
+
+
+
+
+
+Question5: "List the SOPInstanceUIDs of CT images acquired on 2023‑06‑15."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT DISTINCT ?sopInstanceUID
+WHERE {
+  ?series rdf:type dcm:Series .
+  ?series dcm:Modality ?modality .
+  ?series dcm:isImageOf ?image .
+  ?image dcm:SOPInstanceUID ?sopInstanceUID .
+  FILTER(?modality = "CT")
+  OPTIONAL { ?image dcm:AcquisitionDate ?acquisitionDate . }
+  BIND(xsd:date(REPLACE(?acquisitionDate, "-", "/")) AS ?normalizedDate)
+  FILTER(?normalizedDate = xsd:date("2023-06-15"))
+}
+
+
+
+
+
+Question6: "Find the UID of oldest CT image (by AcquisitionDate) for PatientName “Michael Brown.”"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT ?imageUID WHERE {
+  ?patient rdf:type dcm:Patient .
+  ?patient dcm:PatientName "Michael Brown" .
+  ?study dcm:isStudyOf ?patient .
+  ?series dcm:isSeriesOf ?study .
+  ?series dcm:Modality "CT" .
+  ?image dcm:isImageOf ?series .
+  ?image dcm:AcquisitionDate ?acquisitionDate .
+  ?image dcm:ImagePositionPatient ?position .
+  FILTER(?acquisitionDate > "1900-01-01")
+  BIND(xsd:date(REPLACE(?acquisitionDate, "-", "/")) AS ?dateValue)
+  ORDER BY DESC(?dateValue)
+  LIMIT 1
+  ?image dcm:ImageUID ?imageUID .
+}
+
+
+
+
+
+Question7: "Show PatientOrientation and PixelSpacing for all CT images in SeriesInstanceUID “S78901.”"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?patientOrientation ?pixelSpacing
+WHERE {
+  ?series rdf:type dcm:Series .
+  ?series dcm:Modality "CT" .
+  ?series dcm:SeriesInstanceUID "S78901" .
+  ?image dcm:isImageOf ?series .
+  ?image dcm:ImageOrientationPatient ?patientOrientation .
+  ?image dcm:PixelSpacing ?pixelSpacing .
+}
+ORDER BY ?patientOrientation ?pixelSpacing
+
+
+
+
+
+Question8: "For each patient, compute the average PatientWeight across all their studies."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT ?patient (AVG(xsd:float(?patientsWeight)) AS ?avgWeight)
+WHERE {
+  ?patient rdf:type dcm:Patient .
+  ?study dcm:isStudyOf ?patient .
+  ?study dcm:PatientsAge ?patientsAge .
+  ?study dcm:PatientWeight ?patientsWeight .
+  ?study dcm:PatientSize ?patientsSize .
+}
+GROUP BY ?patient
+ORDER BY ?patient
+
+
+
+
+
+Question9: "List every study instance UID where PatientsAge exceeds 65 years."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT DISTINCT ?studyInstanceUID
+WHERE {
+  ?study rdf:type dcm:Study .
+  ?study dcm:StudyInstanceUID ?studyInstanceUID .
+  ?study dcm:PatientsAge ?patientsAge .
+  BIND(xsd:integer(REPLACE(?patientsAge, "Y", "") + "0") AS ?ageInYears)
+  FILTER(?ageInYears > 65)
+}
+
+
+
+
+
+Question10: "Show StudyDescription for studies dated between 2022‑01‑01 and 2022‑03‑31."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?studyDescription
+WHERE {
+  ?study rdf:type dcm:Study .
+  ?study dcm:StudyDate ?studyDate .
+  ?study dcm:StudyDescription ?studyDescription .
+  FILTER(STRSTARTS(STR(?studyDate), "2022"))
+  FILTER(STR(?studyDate) >= "2022-01-01" && STR(?studyDate) <= "2022-03-31")
+}
+
+
+
+
+
+Question11: "Retrieve the name of the patients whose PatientName starts with “P” and who have at least one CT image."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?patientName
+WHERE {
+  ?patient rdf:type dcm:Patient .
+  ?patient dcm:PatientName ?patientName .
+  ?study dcm:isStudyOf ?patient .
+  ?series dcm:isSeriesOf ?study .
+  ?image dcm:isImageOf ?series .
+  FILTER(CONTAINS(?patientName, "P") && ?study dcm:Modality "CT")
+}
+
+
+
+
+
+Question12: "Find series UID where SeriesTime is between 14:00:00 and 16:00:00 on any date."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?seriesUID WHERE {
+  ?study rdf:type dcm:Study .
+  ?study dcm:StudyInstanceUID ?studyUID .
+  ?series rdf:type dcm:Series .
+  ?series dcm:isSeriesOf ?study .
+  ?series dcm:SeriesDate ?seriesDate .
+  ?series dcm:SeriesTime ?seriesTime .
+  FILTER(CONTAINS(?seriesTime, "14:00:00") || CONTAINS(?seriesTime, "15:00:00") || CONTAINS(?seriesTime, "16:00:00"))
+}
+
+
+
+
+
+Question13: "List patients names referred by Dr. Smith or Dr. Lee."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?patientName
+WHERE {
+  ?patient rdf:type dcm:Patient .
+  ?patient dcm:PatientName ?patientName .
+  ?study dcm:isStudyOf ?patient .
+  ?study dcm:ReferringPhysicianName ?referringPhysicianName .
+  FILTER(CONTAINS(?referringPhysicianName, "Smith") || CONTAINS(?referringPhysicianName, "Lee"))
+}
+
+
+
+
+
+Question14: "For each patient name, show the total count of their CT images."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?patientName (COUNT(?series) AS ?ctImageCount)
+WHERE {
+  ?patient rdf:type dcm:Patient .
+  ?patient dcm:PatientName ?patientName .
+  ?study rdf:type dcm:Study .
+  ?study dcm:isStudyOf ?patient .
+  ?series rdf:type dcm:Series .
+  ?series dcm:isSeriesOf ?study .
+  ?series dcm:Modality "CT" .
+}
+
+
+
+
+
+Question15: "Retrieve studiesUID whose StudyDescription contains both the keywords “brain” and “contrast.”"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?studyInstanceUID WHERE {
+  ?study rdf:type dcm:Study .
+  ?study dcm:StudyInstanceUID ?studyInstanceUID .
+  ?study dcm:StudyDescription ?studyDescription .
+  FILTER(REGEX(?studyDescription, "brain", "i") && REGEX(?studyDescription, "contrast", "i"))
+}
+
+
+
+
+
+Question16: "List imagesUID where BitsStored is less than BitsAllocated."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?imageUID
+WHERE {
+  ?image rdf:type dcm:Image .
+  ?image dcm:ImageType ?imageType .
+  ?image dcm:BitsAllocated ?bitsAllocated .
+  ?image dcm:BitsStored ?bitsStored .
+  ?image dcm:KVP ?kvp .
+  ?image dcm:PhotometricInterpretation ?photometricInterpretation .
+  FILTER(?bitsStored < ?bitsAllocated)
+}
+
+
+
+
+
+Question17: "Retrieve the maximum RescaleSlope value across all CT images."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT MAX(?rescaleSlope) AS ?maximumRescaleSlope
+WHERE {
+  ?study rdf:type dcm:Study .
+  ?series rdf:type dcm:Series .
+  ?series dcm:isSeriesOf ?study .
+  ?image rdf:type dcm:Image .
+  ?image dcm:isImageOf ?series .
+  ?image dcm:Modality ?modality .
+  ?image dcm:RescaleSlope ?rescaleSlope .
+  FILTER(?modality = "CT")
+}
+
+
+
+
+
+Question18: "Find patient names who have at least one series of Modality “CT” and at least one series of Modality “RTDOSE.”"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT DISTINCT ?patientName
+WHERE {
+  ?patient rdf:type dcm:Patient .
+  ?patient dcm:PatientName ?patientName .
+  ?study rdf:type dcm:Study .
+  ?study dcm:isStudyOf ?patient .
+  ?series1 rdf:type dcm:Series .
+  ?series1 dcm:isSeriesOf ?study .
+  ?series1 dcm:Modality "CT" .
+  ?series2 rdf:type dcm:Series .
+  ?series2 dcm:isSeriesOf ?study .
+  ?series2 dcm:Modality "RTDOSE" .
+}
+
+
+
+
+
+Question19: "Show all series UID where Modality is neither “CT” nor “MR.”"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?seriesUID
+WHERE {
+  ?series rdf:type dcm:Series .
+  ?series dcm:Modality ?modality .
+  ?series dcm:SeriesUID ?seriesUID .
+  FILTER(?modality != "CT" && ?modality != "MR")
+}
+
+
+
+
+
+Question20: "List UID of CT images where RescaleIntercept is not set."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT DISTINCT ?imageUID
+WHERE {
+  ?image rdf:type dcm:Image .
+  ?image dcm:Modality "CT" .
+  OPTIONAL { ?image dcm:RescaleIntercept ?rescaleIntercept . }
+  FILTER NOT EXISTS(?rescaleIntercept)
+  ?image dcm:hasUID ?imageUID .
+}
+
+
+
+
+
+Question21: "For PatientName “Laura White,” show every StudyInstanceUID along with its StudyTime."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT ?studyInstanceUID ?studyTime
+WHERE {
+  ?patient rdf:type dcm:Patient .
+  ?patient dcm:PatientName "Laura White" .
+  ?study dcm:isStudyOf ?patient .
+  ?study dcm:StudyInstanceUID ?studyInstanceUID .
+  ?study dcm:StudyTime ?studyTime .
+}
+ORDER BY ?studyInstanceUID
+
+
+
+
+
+Question22: "Retrieve CT images UID where PixelSpacing is between 0.5 and 1.5."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?imageUID
+WHERE {
+  ?image rdf:type dcm:Image .
+  ?image dcm:PixelSpacing ?pixelSpacing .
+  ?image dcm:SOPInstanceUID ?imageUID .
+  FILTER(xsd:float(?pixelSpacing[1]) >= 0.5 && xsd:float(?pixelSpacing[1]) <= 1.5)
+}
+
+
+
+
+
+Question23: "List the number of studies for each PatientSex."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT ?patientSex (COUNT(?study) AS ?studyCount) WHERE {
+  ?study rdf:type dcm:Study .
+  ?study dcm:PatientSex ?patientSex .
+}
+
+
+
+
+
+Question24: "Find UID of series created in the last 30 days (relative to 2025‑04‑20)."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?seriesUID WHERE {
+  ?series rdf:type dcm:Image .
+  ?series dcm:AcquisitionDate ?acquisitionDate .
+  ?series dcm:SeriesUID ?seriesUID .
+  FILTER(?acquisitionDate > "2025-04-20")
+  FILTER(xsd:date(?acquisitionDate) <= xsd:date("2025-05-20"))
+}
+ORDER BY DESC(xsd:date(?acquisitionDate))
+LIMIT 30
+
+
+
+
+
+Question25: "List seriesUID that contain more than 50 CT images."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT DISTINCT ?seriesUID
+WHERE {
+  ?series rdf:type dcm:Series .
+  ?series dcm:isImageOf ?image .
+  ?image dcm:Modality "CT" .
+  ?image dcm:PerformingPhysiciansName ?performer .
+  ?series dcm:SeriesUID ?seriesUID .
+  FILTER(?performer != "")
+  BIND(COUNT(?image) AS ?imageCount)
+  FILTER(?imageCount > 50)
+}
+
+
+
+
+
+Question26: "Retrieve studies UID before 2010‑01‑01 whose StudyID begins with “STU.”"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?studyInstanceUID WHERE {
+  ?study rdf:type dcm:Study .
+  ?study dcm:StudyInstanceUID ?studyInstanceUID .
+  ?study dcm:StudyDate ?studyDate .
+  ?study dcm:StudyID ?studyID .
+  FILTER(xsd:date(?studyDate) < xsd:date("2010-01-01"))
+  FILTER(REGEX(?studyID, "^STU.*", "i"))
+}
+
+
+
+
+
+Question27: "Find patients name older than 70 years with PatientWeight under 60 kg."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT DISTINCT ?patientName ?patientsAge ?patientWeight
+WHERE {
+  ?study rdf:type dcm:Study .
+  ?study dcm:PatientsAge ?patientsAge .
+  ?study dcm:ReferringPhysicianName ?referringPhysicianName .
+  ?study dcm:RetrieveAETitle ?aetitle .
+  ?study dcm:PatientWeight ?patientWeight .
+  FILTER(xsd:integer(?patientsAge) > 70 && xsd:float(?patientWeight) < 60)
+}
+
+
+
+
+
+Question28: "For each patient name, show their earliest and latest StudyDate."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT ?patientName ?earliestStudyDate ?latestStudyDate
+WHERE {
+  ?patient rdf:type dcm:Patient .
+  ?patient dcm:PatientName ?patientName .
+  ?patient dcm:PatientID ?patientID .
+  ?patient dcm:PatientBirthDate ?birthDate .
+  ?study rdf:type dcm:Study .
+  ?study dcm:isStudyOf ?patient .
+  ?study dcm:StudyDate ?studyDate .
+  ?study dcm:StudyID ?studyID .
+  BIND(xsd:date(?birthDate) AS ?birthDateAsDate)
+  BIND(xsd:date(?studyDate) AS ?studyDateAsDate)
+  FILTER(?studyDateAsDate >= ?birthDateAsDate)
+  BIND(IF(?latestStudyDate IS NULL || ?latestStudyDate > ?studyDate, ?studyDate, ?latestStudyDate) AS ?currentStudyDate)
+  BIND(IF(?earliestStudyDate IS NULL || ?earliestStudyDate > ?currentStudyDate, ?currentStudyDate, ?earliestStudyDate) AS ?newEarliestStudyDate)
+  OPTIONAL { ?study2 rdf:type dcm:Study .
+            ?study2 dcm:isStudyOf ?patient .
+            ?study2 dcm:StudyDate ?study2Date .
+            FILTER(?study2Date < ?studyDate)
+            BIND(IF(?newEarliestStudyDate IS NULL, ?study2Date, ?newEarliestStudyDate) AS ?earliestStudyDate)
+          }
+  OPTIONAL { ?study3 rdf:type dcm:Study .
+            ?study3 dcm:isStudyOf ?patient .
+            ?study3 dcm:StudyDate ?study3Date .
+            FILTER(?study3Date > ?studyDate)
+            B
+
+
+
+
+
+Question29: "List studiesUID that are missing a RetrieveAETitle."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?studiesUID
+WHERE {
+  ?study rdf:type dcm:Study .
+  ?study dcm:StudiesUID ?studiesUID .
+  FILTER NOT EXISTS {
+    ?study dcm:RetrieveAETitle ?retrieveAETitle .
+  }
+}
+
+
+
+
+
+Question30: "Find all CT images UID where SamplesPerPixel > 1."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT DISTINCT ?sopInstanceUID
+WHERE {
+  ?series rdf:type dcm:Series .
+  ?series dcm:Modality "CT" .
+  ?image rdf:type dcm:Image .
+  ?image dcm:isImageOf ?series .
+  ?image dcm:SOPInstanceUID ?sopInstanceUID .
+  FILTER(xsd:integer(?sopInstanceUID) > 1)
+}
+
+
+
+
+
+Question31: "Show each PatientName along with the total number of series they have."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT ?patientName (COUNT(?series) AS ?seriesCount)
+WHERE {
+  ?patient rdf:type dcm:Patient .
+  ?patient dcm:PatientName ?patientName .
+  ?series dcm:isSeriesOf ?patient .
+}
+
+
+
+
+
+Question32: "Retrieve studiesUID where StudyTime = “00:00:00” exactly."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT ?studyUID WHERE {
+  ?study rdf:type dcm:Study .
+  ?study dcm:StudyTime ?studyTime .
+  ?study dcm:StudyInstanceUID ?studyUID .
+  FILTER(xsd:time(?studyTime) = xsd:time("00:00:00"))
+}
+
+
+
+
+
+Question33: "Find CT seriesUID whose ImageType includes the value “DERIVED.”"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?seriesUID
+WHERE {
+  ?series rdf:type dcm:Study .
+  ?series dcm:isImageOf ?image .
+  ?image dcm:Modality "CT" .
+  ?image dcm:ImageType ?imageType .
+  FILTER(CONTAINS(?imageType, "DERIVED"))
+  ?image dcm:AcquisitionDate ?acquisitionDate .
+  ?image dcm:AcquisitionNumber ?acquisitionNumber .
+  ?image dcm:SeriesUID ?seriesUID .
+}
+
+
+
+
+
+Question34: "List all patients name whose PatientBirthDate falls on February 29 (leap day)."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?patientName ?patientBirthDate
+WHERE {
+  ?patient rdf:type dcm:Patient .
+  ?patient dcm:PatientName ?patientName .
+  ?patient dcm:PatientBirthDate ?patientBirthDate .
+  FILTER(?patientBirthDate = "1900-02-29" || CONTAINS(?patientBirthDate, "1904-02-29") || CONTAINS(?patientBirthDate, "1908-02-29") || CONTAINS(?patientBirthDate, "1912-02-29") || CONTAINS(?patientBirthDate, "1916-02-29") || CONTAINS(?patientBirthDate, "1920-02-29") || CONTAINS(?patientBirthDate, "1924-02-29") || CONTAINS(?patientBirthDate, "1928-02-29") || CONTAINS(?patientBirthDate, "1932-02-29") || CONTAINS(?patientBirthDate, "1936-02-29") || CONTAINS(?patientBirthDate, "1940-02-29") || CONTAINS(?patientBirthDate, "1944-02-29") || CONTAINS(?patientBirthDate, "1948-02-29") || CONTAINS(?patientBirthDate, "1952-02-29") || CONTAINS(?patientBirthDate, "1956-02-29") || CONTAINS(?patientBirthDate, "1960-02-29") || CONTAINS(?patientBirthDate, "1964-02-29") || CONTAINS(?patientBirthDate, "1968-02-29") || CONTAINS(?patientBirthDate, "1
+
+
+
+
+
+Question35: "Find images UID where HighBit is less than 12."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?imageUID
+WHERE {
+  ?image rdf:type dcm:Image .
+  ?image dcm:isImageOf ?series .
+  ?image dcm:HighBit ?highBit .
+  ?image dcm:BitsAllocated ?bitsAllocated .
+  ?image dcm:BitsStored ?bitsStored .
+  FILTER(?highBit < 12)
+}
+
+
+
+
+
+Question36: "List seriesUID where SeriesDate is in the summer months (June, July, or August)."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?seriesUID
+WHERE {
+  ?series rdf:type dcm:Series .
+  ?series dcm:SeriesDate ?seriesDate .
+  ?series dcm:SeriesUID ?seriesUID .
+  FILTER(CONTAINS(STR(?seriesDate), "June") || CONTAINS(STR(?seriesDate), "July") || CONTAINS(STR(?seriesDate), "August"))
+}
+
+
+
+
+
+Question37: "Retrieve patients names with PatientSize greater than 1.75 m."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?patientName ?patientSize
+WHERE {
+  ?patient rdf:type dcm:Patient .
+  ?patient dcm:PatientName ?patientName .
+  ?study dcm:isStudyOf ?patient .
+  ?study dcm:PatientSize ?patientSize .
+  FILTER(xsd:decimal(?patientSize) > 1.75)
+}
+
+
+
+
+
+Question38: "Show seriesUID where PerformingPhysiciansName contains the substring “Watson.”"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?seriesUID
+WHERE {
+  ?series rdf:type dcm:Series .
+  ?series dcm:SeriesDate ?seriesDate .
+  ?series dcm:Modality ?modality .
+  ?series dcm:PerformingPhysiciansName ?performingPhysiciansName .
+  ?series dcm:isSeriesOf ?study .
+  FILTER(CONTAINS(?performingPhysiciansName, "Watson"))
+  FILTER(?modality = "CT")
+}
+
+
+
+
+
+Question39: "List CT imagesUID where the Z‑coordinate of ImagePositionPatient is positive."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?imageUID
+WHERE {
+  ?image rdf:type dcm:ImageOfCTImage .
+  ?image dcm:ImagePositionPatient ?position .
+  BIND(IF(?position[3] > 0, ?image, FALSE) AS ?isPositiveZ)
+  FILTER(?isPositiveZ)
+}
+
+
+
+
+
+Question40: "What is the date difference between the earliest and latest study for Patient 'David Green'?"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT ?earliestStudyDate ?latestStudyDate ?dateDifference
+WHERE {
+  ?patient rdf:type dcm:Patient .
+  ?patient dcm:PatientID "David Green" .
+  ?study1 dcm:isStudyOf ?patient .
+  ?study1 dcm:StudyDate ?earliestStudyDate .
+  ?study2 dcm:isStudyOf ?patient .
+  ?study2 dcm:StudyDate ?latestStudyDate .
+  FILTER(?study1 ^ < ?study2)
+  BIND(xsd:dateTime(?latestStudyDate) - xsd:dateTime(?earliestStudyDate) AS ?dateDifference)
+}
+ORDER BY DESC(?dateDifference)
+
+
+
+
+
+Question41: "Find patientsName who have studies with a Patient Weight recorded but no Patient Size."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?patientsName
+WHERE {
+  ?patient rdf:type dcm:Patient .
+  ?patient dcm:PatientsName ?patientsName .
+  ?study dcm:isStudyOf ?patient .
+  OPTIONAL { ?study dcm:PatientWeight ?weight . }
+  OPTIONAL { ?study dcm:PatientSize ?size . }
+  FILTER(?weight && !?size)
+}
+
+
+
+
+
+Question42: "Retrieve the SOP Instance UIDs for images where the Acquisition Number is missing."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?sopInstanceUID
+WHERE {
+  ?image rdf:type dcm:Image .
+  ?image dcm:SOPInstanceUID ?sopInstanceUID .
+  OPTIONAL { ?image dcm:AcquisitionNumber ?acquisitionNumber . }
+  FILTER NOT EXISTS { ?image dcm:AcquisitionNumber ?acquisitionNumber }
+}
+
+
+
+
+
+Question43: "Calculate the minimum and maximum Rescale Intercept among all CT images"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?minRescaleIntercept ?maxRescaleIntercept
+WHERE {
+  ?study rdf:type dcm:Study .
+  ?series rdf:type dcm:Series .
+  ?series dcm:isSeriesOf ?study .
+  ?image rdf:type dcm:Image .
+  ?image dcm:isImageOf ?series .
+  ?image dcm:Modality "CT" .
+  ?image dcm:RescaleIntercept ?rescaleIntercept .
+  FILTER(?rescaleIntercept ^ "[0-9]")
+}
+GROUP BY ?rescaleIntercept
+ORDER BY ?rescaleIntercept
+LIMIT 1
+BIND(MIN(xsd:float(?rescaleIntercept)) AS ?minRescaleIntercept)
+BIND(MAX(xsd:float(?rescaleIntercept)) AS ?maxRescaleIntercept)
+
+
+
+
+
+Question44: "What is the average Patient Weight for studies performed by Dr. Rodriguez?"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT (AVG(?patientWeight) AS ?avgPatientWeight)
+WHERE {
+  ?study rdf:type dcm:Study .
+  ?study dcm:PerformingPhysiciansName ?performingPhysician .
+  ?study dcm:PatientsAge ?patientsAge .
+  ?study dcm:PatientWeight ?patientWeight .
+  FILTER(CONTAINS(?performingPhysician, "Rodriguez"))
+}
+ORDER BY ?patientsAge
+
+
+
+
+
+Question45: "What is the Bits Stored value for images with a Rescale Slope of 2.0?"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT ?bitsStored WHERE {
+  ?image rdf:type dcm:Image .
+  ?image dcm:BitsStored ?bitsStored .
+  ?image dcm:RescaleSlope ?rescaleSlope .
+  FILTER(?rescaleSlope = "2.0")
+}
+
+
+
+
+
+Question46: "Find the Study Descriptions for all studies performed on October 26, 2022."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?studyDescription
+WHERE {
+  ?study rdf:type dcm:Study .
+  ?study dcm:StudyDate ?studyDate .
+  ?study dcm:StudyDescription ?studyDescription .
+  ?study dcm:StudyTime ?studyTime .
+  FILTER(CONTAINS(STR(?studyDate), "2022-10-26"))
+}
+
+
+
+
+
+Question47: "What is the patient orientation for all CT images of patient Alex Thompson?"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?patientOrientation
+WHERE {
+  ?image rdf:type dcm:ImageOfCTImage .
+  ?image dcm:PatientName "Alex Thompson" .
+  ?image dcm:PatientOrientation ?patientOrientation .
+}
+
+
+
+
+
+Question48: "List name of all patients who had studies referred by Dr. Chen but performed by Dr. Wang."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?patientName
+WHERE {
+  ?patient rdf:type dcm:Patient .
+  ?patient dcm:PatientName ?patientName .
+  ?study dcm:isStudyOf ?patient .
+  ?study dcm:ReferringPhysicianName ?referringPhysician .
+  ?series dcm:isSeriesOf ?study .
+  ?series dcm:PerformingPhysiciansName ?performingPhysician .
+  FILTER(CONTAINS(?referringPhysician, "Chen") && CONTAINS(?performingPhysician, "Wang"))
+}
+
+
+
+
+
+Question49: "What is the range of energy weighting factors used in CT images for studies performed in 2023?"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?energyWeightingFactorMin ?energyWeightingFactorMax WHERE {
+  {
+    SELECT ?modality ?studyDate MIN(?energyWeightingFactorMin) ?energyWeightingFactorMax MAX(?energyWeightingFactorMax) WHERE {
+      ?image rdf:type dcm:Image .
+      ?image dcm:Modality ?modality .
+      ?image dcm:EnergyWeightingFactor ?energyWeightingFactor .
+      ?series dcm:isSeriesOf ?image .
+      ?study rdf:type dcm:Study .
+      ?study dcm:isStudyOf ?series .
+      ?study dcm:StudyDate ?studyDate .
+      FILTER(CONTAINS(STR(?studyDate), "2023"))
+    }
+    GROUP BY ?modality ?studyDate
+  }
+}
+
+
+
+
+
+Question50: "Which imagesUID have PhotometricInterpretation “MONOCHROME2” and SamplesPerPixel = 1?"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT DISTINCT ?s ?sopInstanceUID
+WHERE {
+  ?s dcm:SOPInstanceUID ?sopInstanceUID .
+  ?s dcm:PhotometricInterpretation "MONOCHROME2" .
+  ?s dcm:SamplesPerPixel 1 .
+}
+
+
+
+
+

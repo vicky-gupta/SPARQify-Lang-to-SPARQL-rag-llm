@@ -1,0 +1,742 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://semantic-dicom.org/dcm#"
+     xml:base="http://semantic-dicom.org/dcm"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:seq="http://semantic-dicom.org/seq#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:rema="http://semantic-dicom.org/rema#"
+     xmlns:dcm-ext="http://semantic-dicom.org/dcm-ext#">
+    <owl:Ontology rdf:about="http://semantic-dicom.org/dcm">
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">(c) SOHARD Software GmbH 2015</rdfs:comment>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">first version with almost complete DICOM standard</rdfs:comment>
+        <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.6 alpha</owl:versionInfo>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+    <!-- http://semantic-dicom.org/rema#hasKey -->
+
+    <owl:AnnotationProperty rdf:about="http://semantic-dicom.org/rema#hasKey"/>
+    
+
+
+    <!-- http://www.w3.org/2000/01/rdf-schema#subClassOf -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#minCardinality -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2002/07/owl#minCardinality"/>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#minQualifiedCardinality -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2002/07/owl#minQualifiedCardinality"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#WaterEquivalentDiameterCalculationMethodCodeSequence -->
+
+    <owl:ObjectProperty rdf:about="http://semantic-dicom.org/dcm#WaterEquivalentDiameterCalculationMethodCodeSequence"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#containsImage -->
+
+    <owl:ObjectProperty rdf:about="http://semantic-dicom.org/dcm#containsImage">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://semantic-dicom.org/dcm#isImageOf"/>
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Series"/>
+        <rdfs:range rdf:resource="http://semantic-dicom.org/dcm#Image"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#containsSeries -->
+
+    <owl:ObjectProperty rdf:about="http://semantic-dicom.org/dcm#containsSeries">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://semantic-dicom.org/dcm#isSeriesOf"/>
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+        <rdfs:range rdf:resource="http://semantic-dicom.org/dcm#Series"/>
+    </owl:ObjectProperty>
+   
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#isImageOf -->
+
+    <owl:ObjectProperty rdf:about="http://semantic-dicom.org/dcm#isImageOf">
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Image"/>
+        <rdfs:range rdf:resource="http://semantic-dicom.org/dcm#Series"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#isSeriesOf -->
+
+    <owl:ObjectProperty rdf:about="http://semantic-dicom.org/dcm#isSeriesOf">
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Series"/>
+        <rdfs:range rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#isStudyOf -->
+
+    <owl:ObjectProperty rdf:about="http://semantic-dicom.org/dcm#isStudyOf">
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+        <rdfs:range rdf:resource="http://semantic-dicom.org/dcm#Patient"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+
+
+
+
+    <!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:label>Image Position (Patient)</rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <!-- http://semantic-dicom.org/dcm#ImagePositionPatient -->
+
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImagePositionPatient">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Image"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+    
+
+    <!-- http://semantic-dicom.org/dcm#ImageOrientationPatient -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImageOrientationPatient">
+        <rdfs:label>Image Orientation (Patient)</rdfs:label>
+    </owl:DatatypeProperty>
+
+    <!-- http://semantic-dicom.org/dcm#ImageOrientationPatient+ -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImageOrientationPatient">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Image"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientSize -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientSize">
+        <rdfs:label>Patient&apos;s Size</rdfs:label>
+    </owl:DatatypeProperty>
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientSize -->
+
+    <owl:DatatypeProperty rdf:resource="http://semantic-dicom.org/dcm#PatientSize">
+        <rdfs:label>PatientSize</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Study"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientSex -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientSex">
+        <rdfs:label>Patient&apos;s Sex</rdfs:label>
+    </owl:DatatypeProperty>
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientSex -->
+
+    <owl:DatatypeProperty rdf:resource="http://semantic-dicom.org/dcm#PatientSex">
+        <rdfs:label>Patient&apos;s Sex</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Patient"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyDescription">
+        <rdfs:label>Study Description</rdfs:label>
+    </owl:DatatypeProperty>
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyDescription">
+        <rdfs:label>Study Description</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#Study"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+
+
+
+    <!-- http://semantic-dicom.org/dcm#AcquisitionDate -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#AcquisitionDate">
+        <rdfs:label>Acquisition Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#AcquisitionNumber -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#AcquisitionNumber"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#BitsAllocated -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#BitsAllocated"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#BitsStored -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#BitsStored"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#EnergyWeightingFactor -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#EnergyWeightingFactor"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#HighBit -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#HighBit"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#ImageType -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ImageType"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#KVP -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#KVP"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#Modality -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#Modality">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>Modality</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientBirthDate -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientBirthDate">
+        <rdfs:label>Patient&apos;s Birth Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientID">
+        <rdfs:label>Patient ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientName -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientName">
+        <rdfs:label>Patient&apos;s Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientOrientation -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientOrientation">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://semantic-dicom.org/dcm#ImageOfCTImage"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>Patient Orientation</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientWeight -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientWeight">
+        <rdfs:domain rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>PatientWeight</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PatientsAge -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PatientsAge">
+        <rdfs:label>Patient&apos;s Age</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PerformingPhysiciansName -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PerformingPhysiciansName">
+        <rdfs:label>Performing Physician&apos;s Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#PhotometricInterpretation -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#PhotometricInterpretation"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#ReferringPhysicianName -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#ReferringPhysicianName">
+        <rdfs:label>Referring Physician&apos;s Name</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#RescaleIntercept -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#RescaleIntercept"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#RescaleSlope -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#RescaleSlope"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#RescaleType -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#RescaleType"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#RetrieveAETitle -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#RetrieveAETitle">
+        <rdfs:label>Retrieve AE Title</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#SOPClassUID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SOPClassUID">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:label>SOP Class UID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#SOPInstanceUID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SOPInstanceUID">
+        <rdfs:label>SOP Instance UID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#SamplesPerPixel -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SamplesPerPixel"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#SeriesDate -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#SeriesDate">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>SeriesDate</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyDate -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyDate">
+        <rdfs:label>Study Date</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyID">
+        <rdfs:label>Study ID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyInstanceUID -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyInstanceUID">
+        <rdfs:label>Study Instance UID</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#StudyTime -->
+
+    <owl:DatatypeProperty rdf:about="http://semantic-dicom.org/dcm#StudyTime">
+        <rdfs:label>Study Time</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#Image -->
+
+    <owl:Class rdf:about="http://semantic-dicom.org/dcm#Image">
+        <rdfs:subClassOf rdf:resource="http://semantic-dicom.org/dcm#InformationEntity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#Image -->
+
+    <owl:Class rdf:about="http://semantic-dicom.org/dcm#Image">
+        <rdfs:subClassOf rdf:resource="http://semantic-dicom.org/dcm#Image"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#WaterEquivalentDiameterCalculationMethodCodeSequence"/>
+                        <owl:someValuesFrom rdf:resource="http://semantic-dicom.org/dcm#WaterEquivalentDiameterCalculationMethodCodeSequenceType"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#AcquisitionDate"/>
+                        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#AcquisitionNumber"/>
+                        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#BitsAllocated"/>
+                        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#BitsStored"/>
+                        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#EnergyWeightingFactor"/>
+                        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#HighBit"/>
+                        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#ImageType"/>
+                        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#KVP"/>
+                        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#PatientOrientation"/>
+                        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#PhotometricInterpretation"/>
+                        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#RescaleIntercept"/>
+                        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#RescaleSlope"/>
+                        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#RescaleType"/>
+                        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#SamplesPerPixel"/>
+                        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#SOPClassUID"/>
+                        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#SOPInstanceUID"/>
+                        <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#InformationEntity -->
+
+    <owl:Class rdf:about="http://semantic-dicom.org/dcm#InformationEntity"/>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#Patient -->
+
+    <owl:Class rdf:about="http://semantic-dicom.org/dcm#Patient">
+        <rdfs:subClassOf rdf:resource="http://semantic-dicom.org/dcm#InformationEntity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#PatientBirthDate"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#PatientID"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#PatientName"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="http://semantic-dicom.org/dcm#Series"/>
+        <owl:disjointWith rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+    </owl:Class>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#Series -->
+
+    <owl:Class rdf:about="http://semantic-dicom.org/dcm#Series">
+        <rdfs:subClassOf rdf:resource="http://semantic-dicom.org/dcm#InformationEntity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#isSeriesOf"/>
+                <owl:allValuesFrom rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#isSeriesOf"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#isSeriesOf"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#Modality"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#PerformingPhysiciansName"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#SeriesDate"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="http://semantic-dicom.org/dcm#Study"/>
+        <rema:hasKey rdf:resource="http://semantic-dicom.org/dcm#SeriesInstanceUID"/>
+        <rdfs:subClassOf>
+
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#Study -->
+
+    <owl:Class rdf:about="http://semantic-dicom.org/dcm#Study">
+        <rdfs:subClassOf rdf:resource="http://semantic-dicom.org/dcm#InformationEntity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#isStudyOf"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://semantic-dicom.org/dcm#Patient"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#PatientWeight"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#PatientsAge"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#ReferringPhysicianName"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#RetrieveAETitle"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#StudyDate"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#StudyID"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#StudyInstanceUID"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://semantic-dicom.org/dcm#StudyTime"/>
+                <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rema:hasKey rdf:resource="http://semantic-dicom.org/dcm#StudyInstanceUID"/>
+    </owl:Class>
+    
+
+
+    <!-- http://semantic-dicom.org/dcm#WaterEquivalentDiameterCalculationMethodCodeSequenceType -->
+
+    <owl:Class rdf:about="http://semantic-dicom.org/dcm#WaterEquivalentDiameterCalculationMethodCodeSequenceType"/>
+    <rdf:Description>
+        <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minCardinality>
+    </rdf:Description>
+    <rdf:Description>
+        <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:minQualifiedCardinality>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

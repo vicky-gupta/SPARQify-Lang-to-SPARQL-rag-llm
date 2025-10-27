@@ -1,0 +1,220 @@
+Class: dcm:Series
+  Parents:
+    - dcm:InformationEntity
+  Restrictions:
+    - onProperty: dcm:isSeriesOf
+    - onProperty: dcm:Modality
+    - onProperty: dcm:PerformingPhysiciansName
+    - onProperty: dcm:SeriesDate
+
+Class: dcm:Image
+  Parents:
+    - dcm:InformationEntity
+  Restrictions:
+    - onProperty: dcm:AcquisitionDate
+    - onProperty: dcm:AcquisitionNumber
+    - onProperty: dcm:BitsAllocated
+    - onProperty: dcm:BitsStored
+    - onProperty: dcm:EnergyWeightingFactor
+    - onProperty: dcm:HighBit
+    - onProperty: dcm:ImageType
+    - onProperty: dcm:KVP
+    - onProperty: dcm:PatientOrientation
+    - onProperty: dcm:PhotometricInterpretation
+    - onProperty: dcm:RescaleIntercept
+    - onProperty: dcm:RescaleSlope
+    - onProperty: dcm:RescaleType
+    - onProperty: dcm:SamplesPerPixel
+    - onProperty: dcm:SOPClassUID
+    - onProperty: dcm:SOPInstanceUID
+
+
+Class: dcm:Study
+  Parents:
+    - dcm:InformationEntity
+  Restrictions:
+    - onProperty: dcm:isStudyOf
+    - onProperty: dcm:PatientWeight
+    - onProperty: dcm:PatientsAge
+    - onProperty: dcm:PatientSize
+    - onProperty: dcm:ReferringPhysicianName
+    - onProperty: dcm:RetrieveAETitle
+    - onProperty: dcm:StudyDate
+    - onProperty: dcm:StudyID
+    - onProperty: dcm:StudyInstanceUID
+    - onProperty: dcm:StudyTime
+
+Class: dcm:Patient
+  Parents:
+    - dcm:InformationEntity
+  Restrictions:
+    - onProperty: dcm:PatientBirthDate
+    - onProperty: dcm:PatientID
+    - onProperty: dcm:PatientName
+    - onProperty: dcm:PatientSex
+
+
+=== OBJECT PROPERTIES ===
+
+ObjectProperty: dcm:containsImage
+  Domain(s): dcm:Series
+  Range(s) : dcm:Image
+
+ObjectProperty: dcm:isSeriesOf
+  Domain(s): dcm:Series
+  Range(s) : dcm:Study
+
+ObjectProperty: dcm:isImageOf
+  Domain(s): dcm:Image
+  Range(s) : dcm:Series
+
+ObjectProperty: dcm:containsSeries
+  Domain(s): dcm:Study
+  Range(s) : dcm:Series
+
+ObjectProperty: dcm:isStudyOf
+  Domain(s): dcm:Study
+  Range(s) : dcm:Patient
+
+=== DATA PROPERTIES ===
+
+DataProperty: dcm:ImagePositionPatient
+  Domain(s): dcm:Image
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:ImageOrientationPatient
+  Domain(s): dcm:Image
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:AcquisitionDate
+  Domain(s): dcm:Image
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:AcquisitionNumber
+  Domain(s): dcm:Image
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:BitsAllocated
+  Domain(s): dcm:Image
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:BitsStored
+  Domain(s): dcm:Image
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:EnergyWeightingFactor
+  Domain(s): dcm:Image
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:HighBit
+  Domain(s): dcm:Image
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:ImageType
+  Domain(s): dcm:Image
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:KVP
+  Domain(s): dcm:Image
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:PatientOrientation
+  Domain(s): dcm:Image
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:RescaleIntercept
+  Domain(s): dcm:Image
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:RescaleSlope
+  Domain(s): dcm:Image
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:RescaleType
+  Domain(s): dcm:Image
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:SOPClassUID
+  Domain(s): dcm:Image
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:SOPInstanceUID
+  Domain(s): dcm:Image
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:SamplesPerPixel
+  Domain(s): dcm:Image
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:PhotometricInterpretation
+  Domain(s): dcm:Image
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:RetrieveAETitle
+  Domain(s): dcm:Study
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:PatientSize
+  Domain(s): dcm:Study
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:StudyDescription
+  Domain(s): dcm:Study
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:ReferringPhysicianName
+  Domain(s): dcm:Study
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:StudyDate
+  Domain(s): dcm:Study
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:StudyID
+  Domain(s): dcm:Study
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:StudyInstanceUID
+  Domain(s): dcm:Study
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:StudyTime
+  Domain(s): dcm:Study
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:PatientWeight
+  Domain(s): dcm:Study
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:PatientsAge
+  Domain(s): dcm:Study
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:PatientSex
+  Domain(s): dcm:Patient
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:PatientBirthDate
+  Domain(s): dcm:Patient
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:PatientID
+  Domain(s): dcm:Patient
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:PatientName
+  Domain(s): dcm:Patient
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:Modality
+  Domain(s): dcm:Series
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:PerformingPhysiciansName
+  Domain(s): dcm:Series
+  Range(s) : <class 'str'>
+
+DataProperty: dcm:SeriesDate
+  Domain(s): dcm:Series
+  Range(s) : <class 'str'>
+

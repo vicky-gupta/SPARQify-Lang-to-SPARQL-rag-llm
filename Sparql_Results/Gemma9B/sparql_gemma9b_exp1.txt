@@ -1,0 +1,424 @@
+Question1: "For the patient with PatientID “P24680”, show their PatientSize and PatientWeight."
+
+
+
+
+
+
+
+Question2: "Which studies UID have RetrieveAETitle equal to “CT_ARCHIVE_A”?"
+
+
+
+
+
+
+
+Question3: "Find all seriesUID of images with modality CT performed by PerformingPhysiciansName “Dr. Johnson” between 08:00:00 and 12:00:00."
+
+
+
+
+
+
+
+Question4: "Retrieve all CT images UID where KVP is greater than 120."
+
+
+
+
+
+
+
+Question5: "List the SOPInstanceUIDs of CT images acquired on 2023‑06‑15."
+
+
+
+
+
+
+
+Question6: "Find the UID of oldest CT image (by AcquisitionDate) for PatientName “Michael Brown.”"
+
+
+
+
+
+
+
+Question7: "Show PatientOrientation and PixelSpacing for all CT images in SeriesInstanceUID “S78901.”"
+
+
+
+
+
+
+
+Question8: "For each patient, compute the average PatientWeight across all their studies."
+
+
+
+
+
+
+
+Question9: "List every study instance UID where PatientsAge exceeds 65 years."
+
+
+
+
+
+
+
+Question10: "Show StudyDescription for studies dated between 2022‑01‑01 and 2022‑03‑31."
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?StudyDescription
+WHERE {
+    ?study rdf:type dcm:Study .
+    ?study dcm:StudyDate ?date .
+    FILTER (regex(?date, "^2022-0[1-3]-\\d{1,2}$")) .
+    ?study dcm:StudyDescription ?StudyDescription .
+}
+
+
+
+
+
+Question11: "Retrieve the name of the patients whose PatientName starts with “P” and who have at least one CT image."
+
+
+
+
+
+
+
+Question12: "Find series UID where SeriesTime is between 14:00:00 and 16:00:00 on any date."
+
+
+
+
+
+
+
+Question13: "List patients names referred by Dr. Smith or Dr. Lee."
+
+
+
+
+
+
+
+Question14: "For each patient name, show the total count of their CT images."
+
+
+
+
+
+
+
+Question15: "Retrieve studiesUID whose StudyDescription contains both the keywords “brain” and “contrast.”"
+
+
+
+
+
+
+
+Question16: "List imagesUID where BitsStored is less than BitsAllocated."
+
+
+
+
+
+
+
+Question17: "Retrieve the maximum RescaleSlope value across all CT images."
+
+
+
+
+
+
+
+Question18: "Find patient names who have at least one series of Modality “CT” and at least one series of Modality “RTDOSE.”"
+
+
+
+
+
+
+
+Question19: "Show all series UID where Modality is neither “CT” nor “MR.”"
+
+
+
+
+
+
+
+Question20: "List UID of CT images where RescaleIntercept is not set."
+
+
+
+
+
+
+
+Question21: "For PatientName “Laura White,” show every StudyInstanceUID along with its StudyTime."
+
+```sparql
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT ?StudyInstanceUID ?StudyTime
+WHERE {
+  ?study dcm:PatientName "Laura White" .
+  ?study dcm:StudyInstanceUID ?StudyInstanceUID .
+  ?study dcm:StudyTime ?StudyTime .
+}
+```
+
+
+
+
+
+Question22: "Retrieve CT images UID where PixelSpacing is between 0.5 and 1.5."
+
+
+
+
+
+
+
+Question23: "List the number of studies for each PatientSex."
+
+
+
+
+
+
+
+Question24: "Find UID of series created in the last 30 days (relative to 2025‑04‑20)."
+
+
+
+
+
+
+
+Question25: "List seriesUID that contain more than 50 CT images."
+
+
+
+
+
+
+
+Question26: "Retrieve studies UID before 2010‑01‑01 whose StudyID begins with “STU.”"
+
+
+
+
+
+
+
+Question27: "Find patients name older than 70 years with PatientWeight under 60 kg."
+
+
+
+
+
+
+
+Question28: "For each patient name, show their earliest and latest StudyDate."
+
+
+
+
+
+
+
+Question29: "List studiesUID that are missing a RetrieveAETitle."
+
+
+
+
+
+
+
+Question30: "Find all CT images UID where SamplesPerPixel > 1."
+
+
+
+
+
+
+
+Question31: "Show each PatientName along with the total number of series they have."
+
+
+
+
+
+
+
+Question32: "Retrieve studiesUID where StudyTime = “00:00:00” exactly."
+
+
+
+
+
+
+
+Question33: "Find CT seriesUID whose ImageType includes the value “DERIVED.”"
+
+
+
+
+
+
+
+Question34: "List all patients name whose PatientBirthDate falls on February 29 (leap day)."
+
+
+
+
+
+
+
+Question35: "Find images UID where HighBit is less than 12."
+
+
+
+
+
+
+
+Question36: "List seriesUID where SeriesDate is in the summer months (June, July, or August)."
+
+
+
+
+
+
+
+Question37: "Retrieve patients names with PatientSize greater than 1.75 m."
+
+
+
+
+
+
+
+Question38: "Show seriesUID where PerformingPhysiciansName contains the substring “Watson.”"
+
+PREFIX dcm: <http://semantic-dicom.org/dcm#>
+SELECT ?seriesUID
+WHERE {
+    ?series rdf:type dcm:Series .
+    ?series dcm:PerformingPhysiciansName ?performingPhysiciansName .
+    FILTER (CONTAINS(str(?performingPhysiciansName), "Watson")) .
+    ?series dcm:SeriesInstanceUID ?seriesUID .
+}
+
+
+
+
+
+Question39: "List CT imagesUID where the Z‑coordinate of ImagePositionPatient is positive."
+
+
+
+
+
+
+
+Question40: "What is the date difference between the earliest and latest study for Patient 'David Green'?"
+
+
+
+
+
+
+
+Question41: "Find patientsName who have studies with a Patient Weight recorded but no Patient Size."
+
+
+
+
+
+
+
+Question42: "Retrieve the SOP Instance UIDs for images where the Acquisition Number is missing."
+
+
+
+
+
+
+
+Question43: "Calculate the minimum and maximum Rescale Intercept among all CT images"
+
+
+
+
+
+
+
+Question44: "What is the average Patient Weight for studies performed by Dr. Rodriguez?"
+
+
+
+
+
+
+
+Question45: "What is the Bits Stored value for images with a Rescale Slope of 2.0?"
+
+
+
+
+
+
+
+Question46: "Find the Study Descriptions for all studies performed on October 26, 2022."
+
+
+
+
+
+
+
+Question47: "What is the patient orientation for all CT images of patient Alex Thompson?"
+
+
+
+
+
+
+
+Question48: "List name of all patients who had studies referred by Dr. Chen but performed by Dr. Wang."
+
+
+
+
+
+
+
+Question49: "What is the range of energy weighting factors used in CT images for studies performed in 2023?"
+
+
+
+
+
+
+
+Question50: "Which imagesUID have PhotometricInterpretation “MONOCHROME2” and SamplesPerPixel = 1?"
+
+
+
+
+
+
+
