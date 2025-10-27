@@ -5,7 +5,7 @@
   &nbsp;&nbsp;&nbsp;&nbsp;
   <img src="images/prlab.png" width="250" height="100" />
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="images/sohardlogo.gif" width="290" height="100" />
+  <img src="images/sohardlogo.gif" width="250" height="100" />
 </div>
 
 > **Transforming natural language questions into precise SPARQL queries using Large Language Models and ontologies.**  
