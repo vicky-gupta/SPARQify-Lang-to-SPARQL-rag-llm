@@ -1,12 +1,12 @@
 # Thesis Topic: LLM-Centric Framework for Ontology-Driven SPARQL Query Generation in RAG for DICOM Databases
 ## Collaborators:
-<p float="left">
-  <img src="images/faulogo.png" width="300" height="400" />
+<div align="center">
+  <img src="images/faulogo.png" width="300" height="143" />
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="images/prlab.png" width="200" height="200" />
-    &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="images/sohardlogo.gif" width="400" height="400" />
-</p>
+  <img src="images/prlab.png" width="300" height="200" />
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="images/sohardlogo.gif" width="300" height="100" />
+</div>
 
 > **Transforming natural language questions into precise SPARQL queries using Large Language Models and ontologies.**  
 > This repository contains the full codebase, datasets, and experimental resources used in my M.Sc. thesis project at Pattern Recognition Lab in FAU Erlangen-Nürnberg.
