@@ -1,9 +1,9 @@
 # Thesis Topic: LLM-Centric Framework for Ontology-Driven SPARQL Query Generation in RAG for DICOM Databases
 ## Collaborators:
 <div align="center">
-  <img src="images/faulogo.png" width="290" height="143" />
+  <img src="images/faulogo.png" width="250" height="123" />
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="images/prlab.png" width="290" height="100" />
+  <img src="images/prlab.png" width="250" height="100" />
   &nbsp;&nbsp;&nbsp;&nbsp;
   <img src="images/sohardlogo.gif" width="290" height="100" />
 </div>
