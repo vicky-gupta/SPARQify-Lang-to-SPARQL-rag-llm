@@ -1,50 +1,81 @@
-***Thesis Topic: LLM-Centric Framework for Ontology-Driven SPARQL Query Generation in RAG for DICOM Databases***
+# Thesis Topic: LLM-Centric Framework for Ontology-Driven SPARQL Query Generation in RAG for DICOM Databases
+## Collaborators:
+<p float="left">
+  <img src="images/faulogosvg.svg" width="400" height="400" />
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="images/prlab.png" width="200" height="200" />
+</p>
 
-*Author:*
+> **Transforming natural language questions into precise SPARQL queries using Large Language Models and ontologies.**  
+> This repository contains the full codebase, datasets, and experimental resources used in my M.Sc. thesis project at Pattern Recognition Lab in FAU Erlangen-Nürnberg.
+> It was the collaboration betwee the Friedrich-Alexander-Universität Erlangen-Nürnberg (FAU) and SOHARD Software GmbH.
 
-Vicky Vicky
-M.Sc. in Artificial Intelligence
-Lehrstuhl für Mustererkennung (Informatik 5)
-Department Informatik
-Friedrich-Alexander-Universität Erlangen-Nürnberg.
+---
 
-*Supervisors:*
+## HPC Note
 
-Dr. Tri-Thien Nguyen,
-M.Sc., Dr. rer. medic. Soroosh Tayebi Arasteh,
-M.Sc., Dr.-Ing. Andreas Maier,
-M.Sc., M.A. Detlef Grittner (CTO),
-Dipl. Inf. Peter Feltens (CEO)
+> All experiments were originally conducted on an **HPC (High Performance Computing)** system.  
+> When reproducing results locally, please **check and update file paths** inside the scripts — some directory structures were altered during data migration.
 
-**BODY OF THE PAGE:**
+---
 
-This folder contains all the assets required to reproduce the results of this thesis. It contains 5 folders that include all Python scripts, SLURM scripts, and datasets used in the implementation of the thesis.
+## Author
 
-Note: While reproducing, you should recheck all the paths in the scripts because all of these experiments were originally conducted on an HPC (High Performance Computing) system. During the transfer of the assets to a local secure folder, the original file structure was lost.
+**Vicky Vicky**  
+*M.Sc. in Artificial Intelligence*  
+[Lehrstuhl für Mustererkennung (Informatik 5)](https://www5.cs.fau.de/)  
+Department Informatik,  
+**Friedrich-Alexander-Universität Erlangen-Nürnberg (FAU)**
 
-**File & Folders:**
+---
 
-*requirements.txt:* All the packages and modules needed to reproduce the results.
+## Supervisors
 
-*Experiments_Scripts:* All four experiment codes, including the fine-tuning code for a multi-GPU setup.
+- **Dr. Tri-Thien Nguyen, M.Sc.**  
+- **Dr. rer. medic. Soroosh Tayebi Arasteh, M.Sc.**  
+- **Dr.-Ing. Andreas Maier**  
+- **M.A. Detlef Grittner (CTO)**  
+- **Dipl. Inf. Peter Feltens (CEO)**  
 
-*Datasets:*
+---
 
-- It contains the dataset used for fine-tuning and the ontology data used in all the experiments.
-- *onto_ver_7.owl:* The 7th version of the ontology, used as a RAG document in Experiment 1.
-- *onto_ver_7_semantics.owl:* A version of the ontology that includes `rdfs:comment` annotations to add contextual clues.
-- *ontology_dump.txt:* A simplified version of the ontology used in Experiment 4 within the OBSR (Ontology-Based SPARQL Repair) Module.
-- *NL2SPARQL_FT_DATA_1600.json:* A fine-tuning dataset of 1600 entries containing NL2SPARQL pairs.
+## Project Overview
 
-*HPC_Scripts:* All the SLURM scripts used to submit jobs to the HPC.
+This repository contains all assets required to **reproduce and explore** the experiments conducted as part of the thesis:
 
-*Fine_Tuning_Weights:*
+> *LLM-Centric Framework for Ontology-Driven SPARQL Query Generation in RAG for DICOM Databases.*
 
-- Contains all the training weights required for Experiment 2.
-- Includes a script (*remove_bad_keys.py*) used to correct the fine-tuning weights by removing problematic keys. This step is necessary for the weights to work properly in Experiment 2.
+The project explores how **Large Language Models (LLMs)** can be fine-tuned and integrated with **RAG (Retrieval-Augmented Generation)** pipelines to generate **ontology-compliant SPARQL queries** from **natural language inputs** — particularly for **DICOM medical imaging databases**.
 
-*Sparql_Results:* All SPARQL result files in `.txt` format.
+---
+
+## Repository Structure
+
+| Folder/File | Description |
+|--------------|-------------|
+| **`requirements.txt`** | List of Python dependencies required to reproduce the experiments. |
+| **`Experiments_Scripts/`** | Contains all four experiment scripts, including multi-GPU fine-tuning code. |
+| **`Datasets/`** | Includes ontology data and fine-tuning datasets used throughout the experiments. |
+| **`HPC_Scripts/`** | Contains all SLURM job submission scripts used for HPC-based training and inference. |
+| **`Fine_Tuning_Weights/`** | Saved model weights and helper scripts (e.g. `remove_bad_keys.py` for key correction). |
+| **`Sparql_Results/`** | Generated SPARQL results and experiment outputs in `.txt` format. |
+
+---
+
+## Datasets and Ontologies
+
+- **`onto_ver_7.owl`** — Base ontology (used as RAG document in Experiment 1).  
+- **`onto_ver_7_semantics.owl`** — Enriched ontology version with `rdfs:comment` annotations for contextual semantics.  
+- **`ontology_dump.txt`** — Simplified ontology used within the *Ontology-Based SPARQL Repair (OBSR)* module (Experiment 4).  
+- **`NL2SPARQL_FT_DATA_1600.json`** — Fine-tuning dataset containing 1,600 NL–SPARQL pairs.
 
 
 
+---
 
+## How to Reproduce
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/<your-username>/nl2sparql-rag.git
+   cd nl2sparql-rag
