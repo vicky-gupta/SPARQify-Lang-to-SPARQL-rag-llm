@@ -118,8 +118,7 @@ The F1 score trends for all experiments and models are illustrated above (see *F
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/<your-username>/nl2sparql-rag.git
-   cd nl2sparql-rag
+   git clone https://github.com/vicky-gupta/SPARQify-Lang-to-SPARQL-rag-llm.git
 
 ---
 
